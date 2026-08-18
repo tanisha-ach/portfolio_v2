@@ -16,3 +16,26 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+/* Caret for the typewriter status pills. */
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Outline that draws itself around a status pill and then stays put.
+   --trace-len is the path perimeter, measured and set per element. */
+@keyframes trace-draw {
+  from {
+    stroke-dashoffset: var(--trace-len);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

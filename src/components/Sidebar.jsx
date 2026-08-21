@@ -8,23 +8,24 @@ export default function Sidebar({ activeId }) {
   const progress = ((activeIndex + 1) / nav.length) * 100;
 
   return (
-    <aside className="sticky top-0 flex h-screen w-55 shrink-0 flex-col border-r border-[#2a2a2a] bg-[#111111] py-7">
-      {/* Identity */}
-      <div className="border-b border-[#2a2a2a] px-6 pb-7">
-        <div className="mb-2.5 text-[13px] font-semibold tracking-[-0.01em] text-white">
-          Tanisha Acharya
-        </div>
-        <div className="inline-flex items-center gap-1.5 rounded-[3px] border border-[#333] bg-[#1e1e1e] px-2 py-1">
-          <span className="size-1.5 rounded-full bg-[#4a9eff]" />
-          <span className="text-[10px] font-medium uppercase tracking-[0.06em] text-[#888]">
-            B2B · 0-1
-          </span>
-        </div>
+    <aside className="sticky top-0 flex h-screen w-55 shrink-0 flex-col border-r border-line bg-page py-7">
+      <div className="border-b border-line px-6 pb-7">
+        <a
+          href="/"
+          className="flex w-fit items-center gap-1.5 text-[13px] font-semibold tracking-[-0.01em] text-ink transition-colors hover:text-copy"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 -960 640 640" width="16" className="shrink-0">
+            <path
+              d="M208.666-613.333l130.667 130.667q8 8 7.666 18.666T338.666-445.333q-8 7.333-18.667 7.667T301.333-445.333L125.333-621.333q-4-4-5.667-8.667t-1.667-10q0-5.333 1.667-10t5.667-8.666l176-176q7.333-7.333 18.333-7.334t19 7.334q8 8 8 19T338.666-796.666L208.666-666.666h298q11.333 0 19 7.666T533.333-640q0 11.333-7.667 19T506.666-613.333H208.666Z"
+              fill="currentColor"
+            />
+          </svg>
+          Back
+        </a>
       </div>
 
-      {/* Contents */}
       <nav className="flex grow flex-col pt-6">
-        <div className="mb-3.5 px-6 text-[9px] font-bold uppercase tracking-[0.12em] text-[#555]">
+        <div className="mb-3.5 px-6 text-[11px] font-semibold uppercase tracking-[0.1em] text-label">
           Contents
         </div>
         <ul className="flex flex-col gap-px">
@@ -35,10 +36,10 @@ export default function Sidebar({ activeId }) {
                 <a
                   href={`#${item.id}`}
                   className={
-                    "flex items-center border-l-2 px-6 py-2 text-[11px] transition-colors duration-200 " +
+                    "flex items-center border-l-2 px-6 py-2.5 text-[13px] transition-colors duration-200 " +
                     (active
-                      ? "border-white bg-white/5 font-semibold text-white"
-                      : "border-transparent font-medium text-[#555] hover:text-[#888]")
+                      ? "border-accent bg-accent/5 font-semibold text-accent"
+                      : "border-transparent font-medium text-label hover:text-ink")
                   }
                 >
                   {item.label}
@@ -48,15 +49,14 @@ export default function Sidebar({ activeId }) {
           })}
         </ul>
 
-        {/* Progress */}
         <div className="mt-auto px-6">
-          <div className="h-0.5 w-full overflow-hidden rounded-[1px] bg-[#222]">
+          <div className="h-0.5 w-full overflow-hidden rounded-[1px] bg-line">
             <div
-              className="h-full rounded-[1px] bg-white transition-[width] duration-300 ease-out"
+              className="h-full rounded-[1px] bg-accent transition-[width] duration-300 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>
-          <div className="mt-2 text-[9px] tracking-[0.04em] text-[#444]">
+          <div className="mt-2.5 text-[11px] tracking-[0.04em] text-label">
             {activeIndex + 1} of {nav.length} sections
           </div>
         </div>

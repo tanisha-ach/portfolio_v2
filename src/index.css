@@ -3,6 +3,22 @@
 @theme {
   --font-sans: "Inter", system-ui, sans-serif;
   --font-display: "Inter Tight", system-ui, sans-serif;
+
+  /* Three text tones, one accent. Every value is checked against the #111
+     page background: copy 8.9:1, label 5.5:1 — both clear AA at small sizes.
+     The old #555/#666/#444/#333 text sat between 1.5:1 and 3.3:1. */
+  --color-ink: #ffffff; /* headings */
+  --color-copy: #a8a8a8; /* paragraphs */
+  --color-label: #8a8a8a; /* kickers, captions, meta */
+  --color-accent: #f5c842; /* the only accent on the page */
+
+  /* Surfaces */
+  --color-page: #111111;
+  --color-surface: #161616; /* cards */
+  --color-line: #262626; /* card borders */
+  --color-rule: #1f1f1f; /* hairline dividers */
+  --color-accent-wash: #1c1a14; /* highlighted card fill */
+  --color-accent-line: #3a3320; /* highlighted card border */
 }
 
 html {
@@ -26,6 +42,37 @@ body {
   50%,
   100% {
     opacity: 0;
+  }
+}
+
+/* Copy confirmation: the pill pops in, and confetti flies out from behind it.
+   --dx/--dy/--rot are set per particle. */
+@keyframes copied-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.92);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes confetti-fly {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1) rotate(var(--rot));
   }
 }
 

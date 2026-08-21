@@ -1,315 +1,401 @@
+import { useEffect, useRef, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import SectionHeader from "./components/SectionHeader";
+import TeamCluster from "./components/TeamCluster";
+import CopyEmail from "./components/CopyEmail";
 import useScrollSpy from "./hooks/useScrollSpy";
 import {
   nav,
+  hero,
   meta,
-  researchStats,
-  approach,
-  features,
-  directions,
+  context,
+  research,
+  ideation,
   results,
+  finalDesign,
+  features,
+  impact,
+  future,
+  learnings,
 } from "./data/caseStudy";
 
-const SECTION_IDS = nav.map((n) => n.id); // overview, challenge, research, prototyping, results, impact
+const SECTION_IDS = nav.map((n) => n.id);
 
-// Faithful dashed-grid placeholder from the Paper design.
-function Placeholder({ label, tall, align = "center" }) {
-  return (
-    <div
-      className={
-        "relative overflow-hidden border border-[#222] bg-[#1a1a1a] " +
-        (tall ? "h-75 " : "h-70 ") +
-        (align === "start" ? "flex items-start justify-start" : "flex items-center justify-center")
-      }
-    >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-50"
-        style={{
-          background:
-            "repeating-linear-gradient(135deg,#191919 0,#191919 1px,transparent 0,transparent 50%)",
-          backgroundSize: "20px 20px",
-        }}
-      />
-      <span className="relative z-10 p-4.5 text-[10px] uppercase tracking-[0.05em] text-[#444]">
-        {label}
-      </span>
-    </div>
-  );
-}
+/* Type scale — seven sizes, each with one job:
+   46 hero · 30 figures · 26 section heading · 17 card title · 15 body ·
+   13 caption · 11 label. Nothing on the page sits outside this. */
 
 const Heading = ({ children }) => (
-  <h2 className="mb-3.5 font-display text-2xl font-bold tracking-[-0.015em] text-white">
+  <h2 className="mb-3.5 font-display text-[26px] font-bold leading-[1.25] tracking-[-0.02em] text-ink">
     {children}
   </h2>
 );
 
 const Body = ({ children }) => (
-  <p className="max-w-195 text-[13px] leading-[1.7] text-[#888]">{children}</p>
+  <p className="max-w-195 text-[15px] leading-[1.7] text-copy">{children}</p>
 );
 
-const Card = ({ kicker, children }) => (
-  <div className="grow basis-0 border border-[#252525] bg-[#171717] px-5 py-4.5">
-    <div className="mb-2.5 text-[9px] font-bold uppercase tracking-[0.1em] text-[#555]">
-      {kicker}
-    </div>
-    <div className="text-[12px] leading-[1.6] text-[#999]">{children}</div>
+const Caption = ({ children }) => (
+  <p className="text-[13px] leading-[1.6] text-copy">{children}</p>
+);
+
+const Figure = ({ children, accent = false }) => (
+  <div
+    className={
+      "font-display text-[30px] font-extrabold leading-[1.1] tracking-[-0.03em] " +
+      (accent ? "text-accent" : "text-ink")
+    }
+  >
+    {children}
   </div>
 );
+
+const CardTitle = ({ children }) => (
+  <h3 className="font-display text-[17px] font-semibold leading-[1.35] tracking-[-0.01em] text-ink">
+    {children}
+  </h3>
+);
+
+const Label = ({ children, accent = false }) => (
+  <div
+    className={
+      "text-[11px] font-semibold uppercase tracking-[0.1em] " +
+      (accent ? "text-accent" : "text-label")
+    }
+  >
+    {children}
+  </div>
+);
+
+const Card = ({ children, highlight = false }) => (
+  <div
+    className={
+      "grow basis-0 p-5 " +
+      (highlight
+        ? "border border-accent-line border-l-[3px] border-l-accent bg-accent-wash"
+        : "border border-line bg-surface")
+    }
+  >
+    {children}
+  </div>
+);
+
+// One key feature: the description beside its screenshot, with a dashed callout
+// cropping into that same screenshot and a matching numbered marker. The marker
+// and callout are amber rather than IBM blue so the annotation layer separates
+// from the product UI it sits on top of — that UI is itself blue.
+function Feature({ feature }) {
+  const { callout, badge } = feature;
+
+  return (
+    <div className="flex items-start gap-4 self-stretch">
+      <div className="flex w-136.5 shrink-0 flex-col items-start gap-2 border border-line bg-surface p-5">
+        <div className="flex items-center gap-2.5">
+          <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] font-bold text-page">
+            {feature.number}
+          </div>
+          <CardTitle>{feature.title}</CardTitle>
+        </div>
+        <div className="self-stretch pl-8.5">
+          <Caption>{feature.body}</Caption>
+        </div>
+      </div>
+
+      <div className="relative flex h-103 w-135.5 shrink-0 items-center">
+        <div
+          className={feature.imageWidth ? "shrink-0 self-stretch" : "flex-1 self-stretch"}
+          style={{
+            width: feature.imageWidth,
+            backgroundImage: `url(${feature.image})`,
+            backgroundSize: "cover",
+            backgroundPosition: feature.imagePosition,
+          }}
+        />
+        <div
+          className="absolute border border-dashed border-accent bg-no-repeat"
+          style={{
+            width: callout.width,
+            height: callout.height,
+            left: callout.left,
+            top: callout.top,
+            backgroundImage: `url(${callout.image})`,
+            backgroundSize: callout.size,
+            backgroundPosition: callout.position,
+          }}
+        />
+        <div
+          className="absolute flex size-7.5 items-center justify-center rounded-full bg-accent text-[15px] font-bold text-page"
+          style={{ left: badge.left, top: badge.top }}
+        >
+          {feature.number}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// The section header pins at the top for the whole section while the feature
+// cards stack up underneath it. The cards stick directly below the header, and
+// the header's height changes with the viewport (its paragraph rewraps), so it
+// is measured rather than hard-coded.
+function FinalDesign() {
+  const headerRef = useRef(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const measure = () => setHeaderHeight(el.getBoundingClientRect().height);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section id="final-design" className="scroll-mt-8">
+      <div ref={headerRef} className="sticky top-0 z-20 bg-page px-14 pt-11 pb-6">
+        <SectionHeader kicker="Prototyping" />
+        <Heading>{finalDesign.heading}</Heading>
+        <Body>{finalDesign.body}</Body>
+      </div>
+
+      <div className="px-14">
+        {/* The gap between cards is the dwell time before the next arrives. The
+            opaque background is what covers the card beneath — not decoration,
+            so it can't be dropped. */}
+        <div className="flex w-276 flex-col gap-30">
+          {features.map((feature) => (
+            <div key={feature.number} className="sticky" style={{ top: headerHeight }}>
+              <div className="bg-page pt-5">
+                <Feature feature={feature} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function App() {
   const activeId = useScrollSpy(SECTION_IDS);
 
   return (
-    <div className="flex min-h-screen bg-[#111111] text-white">
+    <div className="flex min-h-screen bg-page text-ink">
       <Sidebar activeId={activeId} />
 
       <main className="flex-1">
-        {/* Hero */}
-        <header className="px-14 pt-9">
-          <div className="mb-5.5 flex items-center gap-2 text-[10px] font-medium uppercase tracking-widest text-[#555]">
-            <span>IBM Power Systems</span>
-            <span className="text-[#333]">·</span>
-            <span>UX Design</span>
-            <span className="text-[#333]">·</span>
-            <span>Research</span>
+        {/* Overview */}
+        <header id="overview" className="scroll-mt-8 px-14 pt-9">
+          <div className="mb-6 flex items-center gap-2">
+            {hero.eyebrow.map((item, i) => (
+              <span key={item} className="flex items-center gap-2">
+                {i > 0 && <span className="text-[11px] text-label">·</span>}
+                <Label>{item}</Label>
+              </span>
+            ))}
           </div>
-          <h1 className="mb-7 max-w-205 font-display text-[46px] font-extrabold leading-[1.08] tracking-[-0.025em] text-white">
-            Helping 120k companies around the world avoid a loss of $1M+
+          <h1 className="mb-4 max-w-205 font-display text-[46px] font-extrabold leading-[1.08] tracking-[-0.025em] text-ink">
+            {hero.title}
           </h1>
+          <p className="max-w-195 text-[20px] leading-[1.6] text-copy">{hero.summary}</p>
         </header>
 
-        <div className="mx-14">
-          <Placeholder label="Hero — IBM HMC console" tall />
+        <div className="mx-14 mt-9 flex h-75 items-center justify-center border border-line bg-surface">
+          <div
+            className="h-75.5 w-127 shrink-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${hero.image})` }}
+          />
         </div>
 
         {/* Meta */}
-        <div className="mx-14 mt-7 flex border-y border-[#222]">
+        <div className="mx-14 mt-7 flex border-y border-line">
           {meta.map((m, i) => (
             <div
               key={m.label}
               className={
-                "grow basis-0 py-4.5 " +
+                "grow basis-0 py-5 " +
                 (i === 0 ? "" : "px-5 ") +
-                (i < meta.length - 1 ? "border-r border-[#222]" : "")
+                (i < meta.length - 1 ? "border-r border-line" : "")
               }
             >
-              <div className="mb-1.5 text-[9px] font-semibold uppercase tracking-widest text-[#555]">
-                {m.label}
+              <div className="mb-2">
+                <Label>{m.label}</Label>
               </div>
-              <div className="text-[13px] font-medium text-[#ccc]">{m.value}</div>
+              {m.team ? (
+                <TeamCluster {...m.team} />
+              ) : (
+                <div className="text-[15px] font-medium text-ink">{m.value}</div>
+              )}
             </div>
           ))}
         </div>
 
-        {/* Overview */}
-        <section id="overview" className="scroll-mt-8 px-14 pt-11">
-          <SectionHeader kicker="Overview" />
-          <Heading>Redesigning the HMC upgrade experience</Heading>
-          <Body>
-            The HMC (Hardware Management Console) upgrade process existed only in the command line —
-            requiring technical expertise, manual compatibility checks, and multiple steps with no
-            progress visibility. As primary UX designer, I created the research plan, led stakeholder
-            and user interviews, built experience maps, prototyped two design directions, and ran
-            concept testing and usability testing with 12 participants. Shipped in the Autumn 2023
-            Power10 release.
-          </Body>
-        </section>
-
-        {/* Challenge */}
-        <section id="challenge" className="scroll-mt-8 px-14 pt-11">
-          <SectionHeader kicker="01 · Challenge" />
-          <Heading>A critical process stuck in the command line</Heading>
-          <Body>
-            IBM Power HMC helps companies bridge the gap between physical servers and virtual cloud,
-            helping them innovate and modernise their applications. Upgrades to the HMC software were
-            released regularly — but the entire upgrade process could only be performed by typing
-            commands into a terminal. This meant system administrators had to manually research
-            compatibility, download files to a separate server, and execute multi-step commands —
-            with no progress visibility and no error guidance. A time-consuming, error-prone process
-            in a high-stakes environment.{" "}
-            <span className="text-[#ccc]">
-              HMW: How might we bring the upgrade process to the GUI so that users can easily bring
-              their systems to the latest level — saving time and money?
-            </span>
-          </Body>
+        {/* Context & challenge */}
+        <section id="context" className="scroll-mt-8 px-14 pt-11">
+          <div className="flex items-start gap-6">
+            <div className="flex flex-1 flex-col">
+              <SectionHeader kicker="Context" />
+              <Body>{context.body}</Body>
+              <div className="mt-6">
+                <SectionHeader kicker="Challenge" />
+              </div>
+              <Body>{context.challenge}</Body>
+            </div>
+            <div className="flex-1 border border-line bg-surface p-6">
+              <p className="font-display text-[20px] font-bold leading-[1.45] tracking-[-0.02em] text-ink">
+                {context.hmw}
+              </p>
+            </div>
+          </div>
         </section>
 
         {/* Research */}
         <section id="research" className="scroll-mt-8 px-14 pt-11">
-          <SectionHeader kicker="02 · Research" />
-          <Heading>Discovery with stakeholders — what we found</Heading>
-          <div className="mb-6">
-            <Body>
-              We ran collaborative design workshops with IBM stakeholders and real HMC users to
-              surface pain points and map the process end-to-end. User quote: “I would love to have
-              the system run pre-requisite checks and let me know which level is the best for me
-              based on my machine type.”
-            </Body>
-          </div>
-          <div className="flex gap-3">
-            {researchStats.map((s) => (
-              <div
-                key={s.stat}
-                className="grow basis-0 border border-[#252525] bg-[#171717] px-5 py-4.5"
-              >
-                <div className="mb-1 text-[28px] font-extrabold tracking-[-0.03em] text-white">
-                  {s.stat}
-                </div>
-                <div className="text-[11px] leading-[1.5] text-[#666]">{s.copy}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Approach */}
-        <section className="px-14 pt-11">
-          <SectionHeader kicker="03 · Approach" />
-          <Heading>IBM Design Thinking Loop</Heading>
-          <div className="mb-6">
-            <Body>
-              We used IBM's Enterprise Design Thinking framework — a continuous loop of observing
-              users, reflecting on insights, and making solutions — to ensure every design decision
-              was grounded in real user needs.
-            </Body>
-          </div>
-          <div className="flex gap-3">
-            {approach.map((a) => (
-              <Card key={a.kicker} kicker={a.kicker}>
-                {a.copy}
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        {/* Prototyping */}
-        <section id="prototyping" className="scroll-mt-8 px-14 pt-11">
-          <SectionHeader kicker="04 · Prototyping" />
-          <Heading>Key features for the final upgrade flow</Heading>
-          <div className="mb-6">
-            <Body>
-              Drawing from initial findings, we identified and prioritized features that directly
-              addressed core pain points. Two distinct interaction patterns were built to test how
-              users respond to different approaches.
-            </Body>
-          </div>
-          <div className="flex gap-3">
-            {features.map((f) => (
-              <Card key={f.kicker} kicker={f.kicker}>
-                {f.copy}
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        {/* Two directions */}
-        <section className="px-14 pt-11">
-          <Heading>Two design directions — A &amp; B</Heading>
-          <div className="mb-6">
-            <Body>
-              Two distinct interaction patterns were built to test how users respond to different
-              approaches. Both shared the same content — only the interaction model differed.
-            </Body>
-          </div>
-          <div className="flex gap-4">
-            {directions.map((d) => (
-              <div key={d.label} className="grow basis-0">
-                <div className="mb-3.5">
-                  <Placeholder label={d.label} align="start" />
-                </div>
-                <p className="text-[12px] leading-[1.65] text-[#888]">{d.copy}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Results */}
-        <section id="results" className="scroll-mt-8 px-14 pt-11">
-          <SectionHeader kicker="05 · Testing Results" />
-          <Heading>Screen B wins — 9 out of 12 participants preferred it</Heading>
-          <div className="mb-6">
-            <Body>
-              12 participants completed moderated usability sessions testing both designs
-              back-to-back. Participants rated clarity, confidence, and perceived effort. The
-              tearsheet gave operators room to work through each step without feeling visually
-              constrained.
-            </Body>
-          </div>
-          <div className="flex gap-3">
-            {results.map((r) => (
-              <div
-                key={r.stat}
-                className={
-                  "grow basis-0 px-5.5 py-5 " +
-                  (r.highlight
-                    ? "border border-[#3a3320] border-l-[3px] border-l-[#d4a437] bg-[#1c1a14]"
-                    : "border border-[#252525] bg-[#171717]")
-                }
-              >
-                <div
-                  className={
-                    "mb-1.5 text-3xl font-extrabold tracking-[-0.03em] text-white " +
-                    (r.stat.startsWith("↓") ? "font-display" : "")
-                  }
-                >
-                  {r.stat}
-                </div>
-                <div
-                  className={
-                    "mb-2 text-[9px] font-bold uppercase tracking-[0.08em] " +
-                    (r.highlight ? "text-[#d4a437]" : "text-[#666]")
-                  }
-                >
-                  {r.kicker}
-                </div>
-                <div className="text-[11px] leading-[1.55] text-[#999]">{r.copy}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Impact */}
-        <section id="impact" className="scroll-mt-8 px-14 pt-11">
-          <div className="border border-[#252525] bg-[#171717] px-8 py-7">
-            <div className="mb-3.5 text-[9px] font-bold uppercase tracking-[0.12em] text-[#555]">
-              06 · Business Impact
+          <SectionHeader kicker="Research" />
+          <Heading>{research.heading}</Heading>
+          <div className="flex items-start gap-6 pb-6">
+            <div className="flex-1">
+              <Body>{research.body}</Body>
             </div>
-            <h2 className="mb-3 font-display text-[22px] font-bold tracking-[-0.015em] text-white">
-              Shipped in the Autumn 2023 Power10 release
-            </h2>
-            <p className="max-w-205 text-[13px] leading-[1.7] text-[#999]">
-              The design was approved by IBM's PM, development and testing teams. Upgrades through
-              the UI directly increase adoption of the latest software versions — meaning more
-              frequent security patching for virtual servers, protecting companies from malicious
-              attacks. Increased adoption also means faster access to new features. Led to a 30%
-              increase in NPS across IBM Power enterprise clients.
+            <p className="flex-1 border-l-2 border-line pl-5 text-[15px] italic leading-[1.65] text-copy">
+              {research.quote}
             </p>
           </div>
+          <div className="flex gap-3">
+            {research.stats.map((s) => (
+              <Card key={s.stat}>
+                <div className="mb-2">
+                  <Figure>{s.stat}</Figure>
+                </div>
+                <Caption>{s.copy}</Caption>
+              </Card>
+            ))}
+          </div>
         </section>
 
-        {/* Footer — also provides trailing scroll room so the final sections
-            can reach the scroll-spy activation line. */}
-        <footer className="mt-16 border-t border-[#1c1c1c] px-14 pt-16 pb-[40vh]">
-          <div className="mb-4 text-[9px] font-bold uppercase tracking-[0.12em] text-[#555]">
-            End of case study
+        {/* Ideation */}
+        <section id="ideation" className="scroll-mt-8 px-14 pt-11">
+          <SectionHeader kicker="Ideation directions" />
+          <Heading>{ideation.heading}</Heading>
+          <div className="mb-6">
+            <Body>{ideation.body}</Body>
           </div>
-          <h2 className="mb-3 font-display text-2xl font-bold tracking-[-0.015em] text-white">
-            Thanks for reading.
-          </h2>
-          <p className="mb-8 max-w-195 text-[13px] leading-[1.7] text-[#888]">
-            Want the full walkthrough — including the interactive prototypes and research artifacts?
-            Happy to share the deep dive.
-          </p>
-          <div className="flex items-center justify-between border-t border-[#1c1c1c] pt-6">
-            <div>
-              <div className="text-[13px] font-semibold text-white">Tanisha Acharya</div>
-              <div className="text-[11px] text-[#555]">
-                Primary UX Designer · IBM Power Systems
+          <div className="flex gap-4">
+            {ideation.directions.map((d) => (
+              <div key={d.label} className="grow basis-0">
+                <div className="mb-4 flex h-70 flex-col items-center border border-line bg-surface">
+                  <div className="px-5 py-4">
+                    <Label>{d.label}</Label>
+                  </div>
+                  <div
+                    className="h-57.5 w-75.75 shrink-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url(${d.image})` }}
+                  />
+                </div>
+                <Caption>{d.copy}</Caption>
               </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Usability testing results */}
+        <section id="results" className="scroll-mt-8 px-14 pt-11">
+          <SectionHeader kicker="User testing results" />
+          <Heading>{results.heading}</Heading>
+          <div className="mb-6">
+            <Body>{results.body}</Body>
+          </div>
+          <div className="flex gap-3">
+            {results.stats.map((r) => (
+              <Card key={r.kicker} highlight={r.highlight}>
+                <div className="mb-2">
+                  <Figure accent={r.highlight}>{r.stat}</Figure>
+                </div>
+                <div className="mb-2.5">
+                  <Label accent={r.highlight}>{r.kicker}</Label>
+                </div>
+                <Caption>{r.copy}</Caption>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Final design — header pins while features stack beneath it */}
+        <FinalDesign />
+
+        {/* Business impact — same amber treatment as the headline testing
+            result, so the two payoff moments of the case study read as a pair. */}
+        <section id="impact" className="scroll-mt-8 px-14 pt-11">
+          <div className="border border-accent-line border-l-[3px] border-l-accent bg-accent-wash p-8">
+            <div className="mb-4">
+              <Label accent>{impact.kicker}</Label>
+            </div>
+            <h2 className="mb-3.5 font-display text-[26px] font-bold leading-[1.25] tracking-[-0.02em] text-ink">
+              {impact.heading}
+            </h2>
+            <p className="max-w-205 text-[15px] leading-[1.7] text-copy">{impact.body}</p>
+          </div>
+        </section>
+
+        {/* Future of the design */}
+        <section id="future" className="scroll-mt-8 px-14 pt-11">
+          <SectionHeader kicker="Future of the design" />
+          <div className="mb-6">
+            <Body>{future.body}</Body>
+          </div>
+          <div className="flex items-stretch gap-3">
+            {future.cards.map((c) => (
+              <Card key={c.title}>
+                <div className="mb-2.5">
+                  <CardTitle>{c.title}</CardTitle>
+                </div>
+                <Caption>{c.copy}</Caption>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Learnings */}
+        <section id="learnings" className="scroll-mt-8 px-14 pt-11">
+          <SectionHeader kicker="Learnings" />
+          <div className="mb-6">
+            <Body>{learnings.body}</Body>
+          </div>
+          <div className="flex items-stretch gap-3">
+            {learnings.cards.map((c) => (
+              <Card key={c.title}>
+                <div className="mb-2.5">
+                  <CardTitle>{c.title}</CardTitle>
+                </div>
+                <Caption>{c.copy}</Caption>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* The page ends 80px after the last line. useScrollSpy's at-bottom check
+            activates the final nav item, so no trailing runway is needed. */}
+        <footer className="mt-16 border-t border-rule px-14 pt-16 pb-20">
+          <div className="mb-4">
+            <Label>End of case study</Label>
+          </div>
+          <Heading>Thanks for reading.</Heading>
+          <div className="mb-8">
+            <Body>
+              I'm looking for my next role. Reach out to me{" "}
+              <CopyEmail email="tanisha.acharya@utexas.edu" /> to talk about more projects!
+            </Body>
+          </div>
+          <div className="flex items-center justify-between border-t border-rule pt-6">
+            <div>
+              <div className="text-[15px] font-semibold text-ink">Tanisha Acharya</div>
+              <div className="mt-1 text-[13px] text-label">Senior Product Designer</div>
             </div>
             <a
               href="#overview"
-              className="text-[11px] uppercase tracking-[0.08em] text-[#888] transition-colors hover:text-white"
+              className="text-[11px] font-semibold uppercase tracking-[0.1em] text-label transition-colors hover:text-ink"
             >
               Back to top ↑
             </a>

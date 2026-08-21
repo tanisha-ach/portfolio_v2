@@ -1,6 +1,7 @@
 import useScrollSpy from "../hooks/useScrollSpy";
 import useActiveInView from "../hooks/useActiveInView";
 import SectionHeader from "../components/SectionHeader";
+import CopyEmail from "../components/CopyEmail";
 import {
   nav,
   meta,
@@ -403,8 +404,8 @@ export default function Aimly() {
             Thanks for reading.
           </h2>
           <p className="mb-8 max-w-195 text-[13px] leading-[1.7] text-[#888]">
-            I'm looking for my next role. Reach out to me tanisha.acharya@utexas.edu to talk about
-            more projects!
+            I'm looking for my next role. Reach out to me{" "}
+            <CopyEmail email="tanisha.acharya@utexas.edu" /> to talk about more projects!
           </p>
           <div className="flex items-center justify-between border-t border-[#1c1c1c] pt-6">
             <div>

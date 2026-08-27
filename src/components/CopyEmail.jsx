@@ -1,21 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 
 // Fixed vectors rather than random ones, so the burst looks the same every time
-// instead of occasionally clumping. Two colours only — the page's accent and
-// white — so a throwaway flourish doesn't introduce hues nothing else uses.
+// instead of occasionally clumping. The palette is the page's cyan accent and
+// two brighter steps of it, plus white — bright enough to read against the dark
+// page without introducing a hue nothing else on the site uses.
 const CONFETTI = [
-  { dx: -46, dy: -16, rot: -140, color: "#f5c842" },
+  { dx: -46, dy: -16, rot: -140, color: "#22d3ee" },
   { dx: -34, dy: -30, rot: 90, color: "#ffffff" },
-  { dx: -14, dy: -38, rot: -60, color: "#f5c842" },
-  { dx: 8, dy: -40, rot: 120, color: "#ffffff" },
-  { dx: 28, dy: -32, rot: -100, color: "#f5c842" },
+  { dx: -14, dy: -38, rot: -60, color: "#67e8f9" },
+  { dx: 8, dy: -40, rot: 120, color: "#06b6d4" },
+  { dx: 28, dy: -32, rot: -100, color: "#22d3ee" },
   { dx: 44, dy: -14, rot: 70, color: "#ffffff" },
-  { dx: 48, dy: 10, rot: -130, color: "#f5c842" },
-  { dx: 32, dy: 28, rot: 80, color: "#ffffff" },
-  { dx: 10, dy: 38, rot: -70, color: "#f5c842" },
+  { dx: 48, dy: 10, rot: -130, color: "#67e8f9" },
+  { dx: 32, dy: 28, rot: 80, color: "#22d3ee" },
+  { dx: 10, dy: 38, rot: -70, color: "#06b6d4" },
   { dx: -12, dy: 36, rot: 110, color: "#ffffff" },
-  { dx: -32, dy: 26, rot: -90, color: "#f5c842" },
-  { dx: -48, dy: 6, rot: 60, color: "#ffffff" },
+  { dx: -32, dy: 26, rot: -90, color: "#67e8f9" },
+  { dx: -48, dy: 6, rot: 60, color: "#22d3ee" },
 ];
 
 // Older browsers, and any non-secure context, don't get navigator.clipboard.

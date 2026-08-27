@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { skillTags, tabs, projects, locationBadge, hireBadge } from "../data/home";
+import PortfolioShell from "../components/PortfolioShell";
+import { projects, locationBadge, hireBadge } from "../data/home";
 import useTypewriter from "../hooks/useTypewriter";
 
 function PinIcon() {
@@ -20,39 +21,6 @@ function BriefcaseIcon() {
       <path
         d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V10h16v11zm0-13H4V5h16v3z"
         fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-function EmailIcon() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-      <path
-        d="M26.889 5L5.111 5C3.393 5 2 6.407 2 8.142L2 23.858C2 25.593 3.393 27 5.111 27L26.889 27C28.607 27 30 25.593 30 23.858L30 8.142C30 6.407 28.607 5 26.889 5Z"
-        fill="#FFFFFF"
-        stroke="#111111"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M3.167 7.75L13.113 15.057C14.824 16.314 17.176 16.314 18.887 15.057L28.833 7.75"
-        fill="none"
-        stroke="#111111"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function LinkedInIcon() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-      <path
-        d="M25.35 5H6.65C5.734 5 5 5.737 5 6.565v18.87c0 0.828 0.734 1.565 1.65 1.565h18.7c0.916 0 1.65-0.737 1.65-1.565V6.565C27 5.737 26.266 5 25.35 5zM11.508 23.778H8.3V13.284h3.208V23.778zM9.95 11.811c-1.008 0-1.925-0.828-1.925-1.933 0-1.105 0.825-1.933 1.925-1.933 1.008 0 1.925 0.828 1.925 1.933S10.958 11.811 9.95 11.811zM23.792 23.687H20.584v-5.156c0-1.197 0-2.853-1.742-2.853-1.742 0-1.925 1.381-1.926 2.669v5.247h-3.208V13.284h3.026v1.382h0.091c0.458-0.828 1.558-1.749 3.117-1.75 3.3 0 3.942 2.21 3.942 5.063V23.687z"
-        fill="#FFFFFF"
       />
     </svg>
   );
@@ -153,64 +121,15 @@ function StatusBadge({ icon, config }) {
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen bg-[#151515] text-white">
-      <aside className="relative flex w-95 shrink-0 flex-col gap-1 border-r border-[#2a2a2a] bg-[#111111] px-9 py-10">
-        <div className="mb-7 flex w-fit items-center gap-5">
-          <div className="relative h-70 w-70 shrink-0 overflow-hidden rounded-[20px] bg-[#ddd]">
-            <div
-              className="absolute left-1/2 top-1/2 h-135.75 w-90.5 -translate-x-1/2 -translate-y-1/2 bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "url(https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01KY8DD6K8PS5XVMERCT51J7D3.jpg)",
-              }}
-            />
-          </div>
-        </div>
-
-        <div className="font-display text-4xl font-bold leading-10 text-white">Tanisha Acharya</div>
-        <div className="text-lg leading-6.5 text-white">Senior Product Designer</div>
-
-        <div className="flex w-fit items-start gap-1.5 pb-7">
-          <a href="mailto:tanisha.acharya@utexas.edu" aria-label="Email">
-            <EmailIcon />
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-            <LinkedInIcon />
-          </a>
-        </div>
-
-        <div className="flex w-fit flex-col items-start gap-3">
-          <div className="self-stretch text-lg leading-6.5 text-white">
-            Solving problems that happen to have interfaces.
-          </div>
-          <div className="flex flex-wrap gap-x-4 gap-y-2 self-stretch">
-            {skillTags.map((tag) => (
-              <div key={tag} className="rounded-[20px] border border-[#333] px-3.5 py-1 text-xs text-[#aaa]">
-                {tag}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <StatusBadge icon={<PinIcon />} config={locationBadge} />
-        <StatusBadge icon={<BriefcaseIcon />} config={hireBadge} />
-      </aside>
-
-      <main className="flex flex-1 flex-col overflow-hidden px-10 py-9">
-        <div className="mb-8 flex gap-8 border-b border-[#2a2a2a]">
-          {tabs.map((tab) => (
-            <div
-              key={tab.label}
-              className={
-                "w-fit px-4 pb-3 text-[15px] leading-4.5 " +
-                (tab.active ? "border-b-2 border-[#f5c842] font-semibold text-white" : "text-[#666]")
-              }
-            >
-              {tab.label}
-            </div>
-          ))}
-        </div>
-
+    <PortfolioShell
+      activeTab="Case Studies"
+      badges={
+        <>
+          <StatusBadge icon={<PinIcon />} config={locationBadge} />
+          <StatusBadge icon={<BriefcaseIcon />} config={hireBadge} />
+        </>
+      }
+    >
         <div className="flex flex-1 flex-col items-start gap-4 self-stretch">
           {projects.map((project) => (
             <a
@@ -220,7 +139,7 @@ export default function Home() {
               style={{ backgroundImage: project.gradient }}
             >
               <div className="relative flex grow basis-0 flex-col gap-2.5">
-                <div className="text-[11px] leading-3.5 tracking-widest text-white/55">{project.number}</div>
+                <div className="text-[11px] leading-3.5 tracking-widest text-white/55">{project.eyebrow}</div>
                 <div className="text-[36px] font-extrabold leading-[105%] tracking-[-0.02em] text-white">
                   {project.title}
                 </div>
@@ -257,7 +176,6 @@ export default function Home() {
             </a>
           ))}
         </div>
-      </main>
-    </div>
+    </PortfolioShell>
   );
 }

@@ -15,17 +15,25 @@ export const nav = [
 ];
 
 export const hero = {
-  eyebrow: ["IBM Power Systems", "UX Design", "Research"],
+  eyebrow: ["IBM Power Systems", "Primary UX Researcher and Designer", "2023"],
   title: "Helping 120k companies around the world avoid a loss of $1M+",
   summary:
-    "Designing the HMC upgrade experience from 0 to 1 — from command-line only to a guided, UI-based flow that reduces errors, saves time, and increases adoption of critical system updates across IBM Power infrastructure. My work across 2 release led to a 30% increase in NPS.",
+    "How I designed the HMC upgrade experience from 0 to 1 — from command-line only to a guided, UI-based flow that reduced errors, saved time, and increased adoption of critical system updates across IBM Power infrastructure. My work across 2 releases led to a 30% increase in NPS.",
   image: `${ASSET}/01M064C7W8S11ZV9E1NMATYHJJ.png`,
 };
 
 export const meta = [
   { label: "Role", value: "Senior Product Designer" },
   { label: "Timeline", value: "8 weeks" },
-  { label: "Team", team: { avatar: "/tanisha.jpg", avatarAlt: "Tanisha Acharya", others: 4 } },
+  {
+    label: "Team",
+    team: {
+      avatar: "/tanisha.jpg",
+      avatarAlt: "Tanisha Acharya",
+      others: 4,
+      roles: "1 PM, 1 Dev, 1 QA and 1 Design Lead",
+    },
+  },
   { label: "Domain", value: "B2B, 0 → 1" },
 ];
 
@@ -51,29 +59,29 @@ export const research = {
 
 export const ideation = {
   heading: "Two design directions",
-  body: "I explored two distinct interaction patterns were built to test how users respond to different approaches. While the key content remained the same, I experiemented with different copies for the warning messages, having the remaining steps happen on the same page v/s a step-by-step wizard with progressive disclosure built in. We performed usability testing for both versions with preference testing-- asking users which nteraction they preferred.",
+  body: "I explored two distinct interaction patterns were built to test how users respond to different approaches. While the key content remained the same, I experiemented with different copies for the warning messages, having the remaining steps happen on the same page v/s a step-by-step wizard with progressive disclosure built in. We performed usability testing for both versions with preference testing, asking users which interaction they preferred.",
   directions: [
     {
-      label: "Screen A — Modal dialog overlay",
+      label: "Screen A — Right-side tearsheet",
       image: `${ASSET}/01M0DQ5WEQQDW0DAA8Z67Q69CP.png`,
-      copy: "The upgrade wizard opens as a full-page modal on the HMC dashboard. Users stay in context but the overlay limits space for step-by-step content and inline guidance.",
+      copy: "The wizard opens as a tearsheet sliding in from the right. More space for step content, a persistent progress sidebar, and contextual help inline.",
     },
     {
-      label: "Screen B — Tearsheet, full right panel",
+      label: "Screen B — Modal dialog overlay",
       image: `${ASSET}/01M0DQ676AGMA8J3CV7DH98751.png`,
-      copy: "The wizard opens as a tearsheet sliding in from the right. More space for step content, a persistent progress sidebar, and contextual help inline.",
+      copy: "The upgrade wizard opens as a full-page modal on the HMC dashboard. Users stay in context but the overlay limits space for step-by-step content and inline guidance.",
     },
   ],
 };
 
 export const results = {
   heading: "Screen B wins — 9 out of 12 participants preferred it",
-  body: "12 participants completed moderated usability sessions testing both designs back-to-back. Participants rated clarity, confidence, and perceived effort. The tearsheet gave operators room to work through each step without feeling visually overwhelmed and constrained.",
+  body: "12 participants completed moderated usability sessions testing both designs back-to-back. Participants rated clarity, confidence, and perceived effort. The modal gave operators room to work through each step without feeling visually overwhelmed and constrained.",
   stats: [
     {
       stat: "9/12",
       kicker: "Preferred Screen B",
-      copy: "Participants found the tearsheet layout easier to follow and less cognitively demanding under realistic time pressure.",
+      copy: "Participants found the modal layout easier to follow and less cognitively demanding under realistic time pressure.",
       highlight: true,
     },
     {

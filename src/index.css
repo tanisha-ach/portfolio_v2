@@ -3,6 +3,9 @@
 @theme {
   --font-sans: "Inter", system-ui, sans-serif;
   --font-display: "Inter Tight", system-ui, sans-serif;
+  /* Used only for the About page's statement and figures — the one place the
+     portfolio raises its voice. */
+  --font-black: "Archivo Black", "Inter Tight", system-ui, sans-serif;
 
   /* Three text tones, one accent. Every value is checked against the #111
      page background: copy 8.9:1, label 5.5:1 — both clear AA at small sizes.
@@ -10,15 +13,26 @@
   --color-ink: #ffffff; /* headings */
   --color-copy: #a8a8a8; /* paragraphs */
   --color-label: #8a8a8a; /* kickers, captions, meta */
-  --color-accent: #f5c842; /* the only accent on the page */
+  /* Each case study carries its own accent — IBM cyan, Aimly orange — so this
+     is the default and a page overrides the three accent variables on its root.
+     Every `accent` utility reads the variable, so nothing else has to change. */
+  --color-accent: #06b6d4;
 
   /* Surfaces */
   --color-page: #111111;
   --color-surface: #161616; /* cards */
   --color-line: #262626; /* card borders */
   --color-rule: #1f1f1f; /* hairline dividers */
-  --color-accent-wash: #1c1a14; /* highlighted card fill */
-  --color-accent-line: #3a3320; /* highlighted card border */
+  --color-accent-wash: #06b6d40d; /* highlighted card fill — accent at 5% */
+  --color-accent-line: #1f383d; /* highlighted card border */
+
+  /* Verdict marks used when weighing design options. These earn their own hues
+     because they encode a judgement — kept, ruled out, watch this — which the
+     single accent can't carry. Icons only, never body text. */
+  --color-pro: #61c145;
+  --color-con: #ec3326;
+  --color-warn: #cc5500;
+  --color-note: #ff9400; /* chosen direction, annotation markers */
 }
 
 html {

@@ -1,16 +1,28 @@
 // Content for the landing page, ported from the Paper design (Page 1.0 / Page 1.1).
 
+export const profile = {
+  name: "Tanisha Acharya",
+  title: "Senior Product Designer",
+  tagline: "Solving problems that happen to have interfaces.",
+  email: "tanisha.acharya@utexas.edu",
+  linkedin: "https://linkedin.com",
+  photo:
+    "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01KY8DD6K8PS5XVMERCT51J7D3.jpg",
+};
+
 export const skillTags = ["Enterprise B2B", "B2C SaaS", "Fintech", "E-commerce", "Healthcare"];
 
+// Playground has no page yet, so it carries no href and renders as plain text.
 export const tabs = [
-  { label: "Case Studies", active: true },
-  { label: "Articles", active: false },
-  { label: "About", active: false },
+  { label: "Case Studies", href: "/" },
+  { label: "Playground" },
+  { label: "About", href: "/about" },
 ];
 
 export const projects = [
   {
     number: "01",
+    eyebrow: "01 · B2C · E-Commerce",
     title: "Aimly LLC",
     description:
       "Led 0-to-1 design of the account creation and dashboard, driving 28.8% increase in new users and a 34.3% lift in events.",
@@ -19,23 +31,24 @@ export const projects = [
     gradient: "linear-gradient(108.84deg in oklab, oklab(53.6% -0.14 0.106) 54.34%, oklab(67.8% -0.154 0.112) 107.14%)",
     images: [
       {
-        src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01KYDWVN5F3AFAY88VH1HMPK7Q.png",
-        width: 207,
-        height: 416,
-        left: 702,
-        top: -236,
+        src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01M0ZT48RDS7DDD2JZ0VJJNBQ2.png",
+        width: 199,
+        height: 409,
+        left: 717,
+        top: -239,
       },
       {
-        src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01KYDWVN5F3AFAY88VH1HMPK7Q.png",
-        width: 207,
-        height: 416,
-        left: 488,
-        top: -26,
+        src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01M0ZT48RDS7DDD2JZ0VJJNBQ2.png",
+        width: 199,
+        height: 409,
+        left: 502,
+        top: -16,
       },
     ],
   },
   {
     number: "02",
+    eyebrow: "02 · Enterprise B2B",
     title: "Upgrade HMC",
     description:
       "Bringing a code-only upgrade task to the GUI, helping enterprises avoid losses of up to a million dollars.",

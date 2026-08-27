@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import useScrollSpy from "../hooks/useScrollSpy";
 import SectionHeader from "../components/SectionHeader";
 import TeamCluster from "../components/TeamCluster";
@@ -76,6 +77,72 @@ function AnnotatedFinal({ shot }) {
   );
 }
 
+// The prototype recording, and the one control it needs. It plays on its own —
+// it is cover art, not a player — but a looping video with no way to stop it is
+// a trap for anyone who finds the motion distracting, so a single toggle sits in
+// the corner. `playsInline` keeps iOS from going fullscreen.
+//
+// The frame is centred on the row's 75% line, the same line the Domain cell's
+// left border falls on. It spans the grid rather than sitting in the last column
+// because a percentage margin resolves against the item's own area, and the row
+// is the measure that matters here. The corner radius traces the phone in the
+// recording: measured off the source, the device's body straightens 80px in on a
+// 532x1080 frame, in percentages so it holds as the frame scales.
+function PrototypeVideo() {
+  const videoRef = useRef(null);
+  const [playing, setPlaying] = useState(true);
+
+  const toggle = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) video.play();
+    else video.pause();
+  };
+
+  return (
+    <div
+      style={{ borderRadius: "15% / 7.4%" }}
+      className="group relative aspect-[532/1080] h-[75vh] shrink-0 self-center overflow-hidden lg:col-span-3 lg:col-start-1 lg:row-start-1 lg:ml-[75%] lg:-translate-x-1/2 lg:justify-self-start lg:self-start"
+    >
+      {/* The button mirrors the video rather than the other way round, so it
+          stays honest if playback stops for a reason we did not ask for. It is
+          hidden until the pointer is over the recording, so the control does not
+          sit on the artwork permanently — touch has no hover, so it stays visible
+          there, and keyboard focus brings it back either way. */}
+      <video
+        ref={videoRef}
+        src="/aimly-dashboard-prototype.mp4"
+        className="h-full w-full object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        aria-label="Screen recording of the Aimly fundraiser dashboard prototype"
+      />
+
+      <button
+        type="button"
+        onClick={toggle}
+        aria-label={playing ? "Pause the prototype recording" : "Play the prototype recording"}
+        className="absolute left-1/2 top-1/2 flex size-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white opacity-0 backdrop-blur-sm transition-[opacity,background-color] duration-200 hover:bg-black/75 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent group-hover:opacity-100 [@media(hover:none)]:opacity-100"
+      >
+        {playing ? (
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" className="shrink-0">
+            <path d="M6 4h4v16H6zM14 4h4v16h-4z" fill="currentColor" />
+          </svg>
+        ) : (
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" className="shrink-0">
+            <path d="M8 5v14l11-7z" fill="currentColor" />
+          </svg>
+        )}
+      </button>
+    </div>
+  );
+}
+
 export default function Aimly() {
   const activeId = useScrollSpy(SECTION_IDS);
 
@@ -102,10 +169,18 @@ export default function Aimly() {
         {/* Overview */}
         <header id="overview" className={`scroll-mt-24 pt-9 lg:scroll-mt-8 ${GUTTER}`}>
           <div className="flex flex-col gap-8 lg:grid lg:grid-cols-3 lg:items-start lg:gap-12">
-            {/* The copy stops around half the row, well short of the frame it
-                shares the grid with — the two columns overlap by design, so the
-                measure is what keeps them apart. */}
-            <div className="min-w-0 lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:max-w-[34rem]">
+            {/* The copy and the frame share one grid cell, so the measure is the
+                only thing keeping them apart. It is derived rather than fixed:
+                the frame is centred on the row's 75% line and its width tracks
+                75vh through the recording's ratio, so the copy may run to that
+                line less half the frame less the 24px gap. A fixed cap held only
+                at the width it was chosen at — narrow the window and the frame
+                slid over the text. The 50% ceiling is the other half of it: the
+                meta row below splits into four equal cells, so half the row is
+                its middle rule, and the copy stops there however much space the
+                frame leaves. `max()` keeps the whole thing sane if the frame ever
+                grows past the line. */}
+            <div className="min-w-0 lg:col-span-3 lg:col-start-1 lg:row-start-1 lg:max-w-[min(50%,max(0px,calc(75%-18.472vh-24px)))]">
               <div className="mb-6 flex flex-wrap items-center gap-2">
                 {hero.eyebrow.map((item, i) => (
                   <span key={item} className="flex items-center gap-2">
@@ -122,40 +197,7 @@ export default function Aimly() {
               </p>
             </div>
 
-            {/* The frame is centred on the row's 75% line — the same line the
-                Domain cell's left border falls on, so the two lock together. It
-                spans the grid rather than sitting in the last column because a
-                percentage margin resolves against the item's own area, and the
-                row is the measure that matters here. Both children are pinned to
-                row 1 so they overlap; the copy's measure is what keeps them
-                apart. It tops out level with the eyebrow and runs well past the
-                copy — at three-quarters of the viewport, tall enough to read as
-                the phone it was shot on. With the height definite the frame can
-                carry the source's own ratio
-                and derive its width, so nothing is cropped or letterboxed. It
-                loops, is silent and has no controls — art, not something to
-                operate; `playsInline` keeps iOS from going fullscreen.
-                The corner radius traces the phone in the recording rather than
-                sitting outside it: measured off the source, the device's body
-                straightens 80px in on a 532x1080 frame. Percentages so it holds
-                as the frame scales — a fixed radius would drift at other
-                viewport heights. No border or surface behind it either; with the
-                shape matched there is nothing left for them to describe. */}
-            <div
-              style={{ borderRadius: "15% / 7.4%" }}
-              className="aspect-[532/1080] h-[75vh] shrink-0 self-center overflow-hidden lg:col-span-3 lg:col-start-1 lg:row-start-1 lg:ml-[75%] lg:-translate-x-1/2 lg:justify-self-start lg:self-start"
-            >
-              <video
-                src="/aimly-dashboard-prototype.mp4"
-                className="h-full w-full object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                aria-label="Screen recording of the Aimly fundraiser dashboard prototype"
-              />
-            </div>
+            <PrototypeVideo />
           </div>
         </header>
 
@@ -245,6 +287,7 @@ export default function Aimly() {
                 <div className="flex flex-col items-start gap-1.5 lg:flex-1 lg:pr-8">
                   <Label>{step.step}</Label>
                   <CardTitle>{step.title}</CardTitle>
+                  <Caption>{step.copy}</Caption>
                 </div>
                 <div className="flex flex-1 items-center justify-center gap-2 border border-line bg-surface p-3">
                   {step.images.map((src) => (

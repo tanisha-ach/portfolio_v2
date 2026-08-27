@@ -8,7 +8,7 @@ export const nav = [
   { id: "research", label: "Research" },
   { id: "approach", label: "Approach" },
   { id: "prototyping", label: "Prototyping" },
-  { id: "decisions", label: "Key decisions" },
+  { id: "decisions", label: "Outcome" },
   { id: "results", label: "Results" },
 ];
 
@@ -35,8 +35,8 @@ export const meta = [
 ];
 
 export const context = [
-  "Aimly is a free digital fundraising platform founded in 2021. It makes fundraising simple for small and medium organizations by selling gourmet chips and popcorn to raise donations — think Girl Scouts, but savoury. Aimly handles the transactions, customer experience and logistics so organizers can focus on their community.",
-  'I joined as senior product designer with a brief no narrower than "improve the overall user experience." Stakeholder interviews and a competitive audit pointed at one gap worth fixing before anything else. Once the team agreed on it, I led account creation and the fundraiser dashboard from 0 to 1, scoped into releases small enough to ship in three weeks.',
+  "Aimly is a free digital fundraising platform founded in 2021. It makes fundraising simple for small and medium organizations by selling gourmet chips and popcorn to raise donations, think Girl Scouts, but savoury! Aimly handles the transactions, customer experience and logistics so organizers can focus on their community.",
+  'I joined as senior product designer with a brief to "improve the overall user experience." Stakeholder interviews and a competitive analysis of features pointed at one (giant) gap worth fixing before anything else. Once I got the team to align on solving the gap, I led account creation and the fundraiser dashboard from 0 to 1, scoped into a release small enough to ship in three weeks.',
 ];
 
 export const research = {
@@ -49,11 +49,11 @@ export const research = {
 
 export const competitive = {
   kicker: "02 · Research — competitive analysis",
-  heading: "Where Aimly led, and where it was missing table stakes",
+  heading: "Where Aimly led, and where it was missing",
   image: `${ASSET}/01M0R2Y5YQATCJF91K4FFYKR7Y.png`,
   paragraphs: [
     "I mapped Aimly against its competitors to find both our gaps and the openings nobody else had taken.",
-    "The decisive gap: Aimly had no user accounts and no way to edit an event once it was live. Every competitor but one allowed editing. This wasn't a feature request — it was table stakes, and it was why organizers left.",
+    "The decisive gap: Aimly had no user accounts and no way to edit an event once it was live. Every competitor but one allowed editing. This wasn't a feature request — it was a key component, and it was why organizers left.",
     "What Aimly already owned: free coaching paired with a five-minute setup, which no competitor matches. Participant-level motivation — personal and team goals, progress, and a live leaderboard — that GoFundMe and Bonfire barely touch. Marketing support for organizers, who elsewhere are left to promote alone. And scheduling a year ahead, which matters to booster clubs and athletic directors who budget annually.",
     "The read was clear: fix table stakes first, then lean on the differentiators. New features could wait.",
   ],
@@ -87,22 +87,26 @@ export const approach = {
   steps: [
     {
       step: "Step 01",
-      title: "Standing up rough screens fast with Claude Code",
+      title: "Ideation with Claude Code",
+      copy: "I fed Claude Code the existing design system and asked it to come up with iterations of the dashboard, describing the elements I wanted along with a low fidelity wireframe. I decided to build on one of the ideas for the final dashboard.",
       images: [`${ASSET}/01M0R8PPJ4PY3BMGVCFYXY5CAF.png`, `${ASSET}/01M0R8PPJ4CWDJXMWMPFTMS0P7.png`],
     },
     {
       step: "Step 02",
       title: "Pulling competitor patterns into Figma with Mobbin MCP",
+      copy: 'I wanted a quick way of looking at the checklists that came from direct and indirect competitors. After connecting to the Mobbin MCP, I instructed Claude to gather examples of "Getting Started" patterns with a focus on random order completion from direct and indirect competitors of Aimly.',
       images: [`${ASSET}/01M0RAJ6YVD12MSS8S7B3VQPXH.jpg`],
     },
     {
       step: "Step 03",
       title: "Turning those patterns into written guidance",
+      copy: "I asked Claude to take the examples collected and write a short report on the industry wide best practices and design recommendations. I ran a similar report for the event card design for the dashboard.",
       images: [`${ASSET}/01M0R7GGZ17G4HZVR427HQRTQK.png`, `${ASSET}/01M0R8MG847HTJTKGGMY4QMW8R.png`],
     },
     {
       step: "Step 04",
       title: "Expanding the style guide to cover the new surfaces",
+      copy: "Looking at the current state of the style guide, I noticed several gaps. Before I started on the ideation, I got Claude to make the foundation solid by getting it to set and expand the design system.",
       images: [`${ASSET}/01M0RACP1EQV5Z0EMXM3WZPYVT.png`],
     },
   ],
@@ -261,7 +265,7 @@ export const prototyping = {
 };
 
 export const decisions = {
-  kicker: "06 · Key decisions",
+  kicker: "06 · Outcome",
   heading: "How the four commitments landed",
   intro: "Each commitment had to survive contact with real screens. These are the decisions that resolved them.",
   cards: [
@@ -270,16 +274,16 @@ export const decisions = {
       copy: "Edit sits on the fundraiser card itself rather than inside a settings page — the action that used to require a phone call is now one tap from the dashboard.",
     },
     {
-      title: "2 · Event and store, split",
-      copy: "Organizing an event and running its storefront became separate entries, so a leader can rally the team while members handle selling.",
-    },
-    {
-      title: "3 · A dashboard that reads the user",
+      title: "2 · User based dashboard",
       copy: "First-time organizers get a next-steps checklist; returning ones get their fundraisers first. Same surface, different emphasis.",
     },
     {
-      title: "4 · Room to grow",
+      title: "3 · Room to grow",
       copy: "A persistent account nav gives settings, payouts and future campaign tools a fixed home, so the dashboard holds up as usage deepens.",
+    },
+    {
+      title: "4 · Event and store, split",
+      copy: "The feature to split event and store got pushed to MVP 2 to make room to fix other security vulnerabilities that were of higher importance.",
     },
   ],
 };
@@ -287,23 +291,23 @@ export const decisions = {
 export const results = {
   kicker: "07 · Results",
   heading: "The outcome, quantified",
-  intro: "Account creation and the dashboard launched in May 2026.",
+  intro: "Account creation and the dashboard were launched in May 2026, these were the changes we saw in 3 months.",
   stats: [
     {
-      stat: "28.8%",
-      kicker: "Increase in users",
+      stat: "28.8% ↑",
+      kicker: "users",
       copy: "More organizers finished signup and came back, now that having an account was worth something.",
       highlight: true,
     },
     {
-      stat: "34.3%",
-      kicker: "Increase in events created",
+      stat: "34.3% ↑",
+      kicker: "events created",
       copy: "Editing and duplication made a second event cheap to start, so organizers ran more of them.",
       highlight: false,
     },
     {
-      stat: "90%",
-      kicker: "Reduction in customer complaints",
+      stat: "90% ↓",
+      kicker: "customer complaints",
       copy: "The calls to customer care that this project existed to remove largely stopped.",
       highlight: false,
     },

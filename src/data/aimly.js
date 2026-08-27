@@ -194,6 +194,22 @@ export const prototyping = {
   finalShots: [
     {
       image: `${ASSET}/01M0V7TDD0W9PP24N99CXBKDP4.png`,
+      // Where each numbered marker sits on the screenshot, as a percentage of
+      // the image. Desktop and mobile both carry the numbers they share.
+      markers: [
+        { n: 1, left: 19.8, top: 21.5 },
+        { n: 2, left: 7.6, top: 21.5 },
+        { n: 4, left: 19.8, top: 28.2 },
+        { n: 5, left: 19.8, top: 46.6 },
+        { n: 3, left: 56.3, top: 51.3 },
+        { n: 6, left: 19.8, top: 56.1 },
+        { n: 1, left: 76.4, top: 20.8 },
+        { n: 4, left: 76.4, top: 25.3 },
+        { n: 5, left: 76.4, top: 49.6 },
+        { n: 6, left: 76.4, top: 62.4 },
+        { n: 2, left: 74.8, top: 78.5 },
+        { n: 3, left: 93.8, top: 78.5 },
+      ],
       notes: [
         {
           n: 1,
@@ -217,6 +233,15 @@ export const prototyping = {
     },
     {
       image: `${ASSET}/01M0XDM60DYV2NYY97Z9MJPYGV.png`,
+      // One marker per phone, pinned to each screen's top-left corner.
+      markers: [
+        { n: 7, left: 5.5, top: 16.5 },
+        { n: 8, left: 20.9, top: 16.5 },
+        { n: 9, left: 36.3, top: 16.5 },
+        { n: 10, left: 51.7, top: 16.5 },
+        { n: 11, left: 67.1, top: 16.5 },
+        { n: 12, left: 82.5, top: 16.5 },
+      ],
       notes: [
         { n: 7, text: "For a first time user without a fundraiser the card becomes a call to action." },
         {

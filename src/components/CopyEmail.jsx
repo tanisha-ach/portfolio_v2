@@ -1,22 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 
 // Fixed vectors rather than random ones, so the burst looks the same every time
-// instead of occasionally clumping. The palette is the page's cyan accent and
-// two brighter steps of it, plus white — bright enough to read against the dark
-// page without introducing a hue nothing else on the site uses.
+// instead of occasionally clumping. Party-confetti colours rather than a tint of
+// the page accent: the whole point of confetti is that no two neighbouring
+// pieces match, and every hue here still clears the dark background.
 const CONFETTI = [
-  { dx: -46, dy: -16, rot: -140, color: "#22d3ee" },
-  { dx: -34, dy: -30, rot: 90, color: "#ffffff" },
-  { dx: -14, dy: -38, rot: -60, color: "#67e8f9" },
-  { dx: 8, dy: -40, rot: 120, color: "#06b6d4" },
-  { dx: 28, dy: -32, rot: -100, color: "#22d3ee" },
-  { dx: 44, dy: -14, rot: 70, color: "#ffffff" },
-  { dx: 48, dy: 10, rot: -130, color: "#67e8f9" },
-  { dx: 32, dy: 28, rot: 80, color: "#22d3ee" },
-  { dx: 10, dy: 38, rot: -70, color: "#06b6d4" },
-  { dx: -12, dy: 36, rot: 110, color: "#ffffff" },
-  { dx: -32, dy: 26, rot: -90, color: "#67e8f9" },
-  { dx: -48, dy: 6, rot: 60, color: "#22d3ee" },
+  { dx: -46, dy: -16, rot: -140, color: "#ff3b30" },
+  { dx: -34, dy: -30, rot: 90, color: "#ff9500" },
+  { dx: -14, dy: -38, rot: -60, color: "#ffd60a" },
+  { dx: 8, dy: -40, rot: 120, color: "#34c759" },
+  { dx: 28, dy: -32, rot: -100, color: "#0a84ff" },
+  { dx: 44, dy: -14, rot: 70, color: "#bf5af2" },
+  { dx: 48, dy: 10, rot: -130, color: "#ff2d95" },
+  { dx: 32, dy: 28, rot: 80, color: "#ffd60a" },
+  { dx: 10, dy: 38, rot: -70, color: "#34c759" },
+  { dx: -12, dy: 36, rot: 110, color: "#ff9500" },
+  { dx: -32, dy: 26, rot: -90, color: "#0a84ff" },
+  { dx: -48, dy: 6, rot: 60, color: "#ff3b30" },
 ];
 
 // Older browsers, and any non-secure context, don't get navigator.clipboard.
@@ -38,7 +38,10 @@ function legacyCopy(text) {
 // The email address, click-to-copy. The confirmation lands under the pointer
 // rather than under the middle of the address, so it reads as a response to the
 // click itself.
-export default function CopyEmail({ email }) {
+//
+// `children` swaps the address for another trigger — an icon, say. The icon has
+// no text of its own, so that case needs `label` to name the button.
+export default function CopyEmail({ email, children, label }) {
   const [copied, setCopied] = useState(false);
   const [originX, setOriginX] = useState(0);
   const [burst, setBurst] = useState(0); // remounts the pill so the burst replays
@@ -79,9 +82,15 @@ export default function CopyEmail({ email }) {
         type="button"
         onClick={copy}
         title="Copy email address"
-        className="cursor-pointer align-baseline text-ink underline decoration-label underline-offset-[3px] transition-colors hover:decoration-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        aria-label={label}
+        className={
+          "cursor-pointer align-baseline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" +
+          (children
+            ? ""
+            : " text-ink underline decoration-label underline-offset-[3px] transition-colors hover:decoration-ink")
+        }
       >
-        {email}
+        {children ?? email}
       </button>
 
       {copied && (

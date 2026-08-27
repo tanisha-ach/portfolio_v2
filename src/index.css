@@ -13,7 +13,7 @@
   --color-ink: #ffffff; /* headings */
   --color-copy: #a8a8a8; /* paragraphs */
   --color-label: #8a8a8a; /* kickers, captions, meta */
-  /* Each case study carries its own accent — IBM cyan, Aimly orange — so this
+  /* Each case study carries its own accent — IBM cyan, Aimly green — so this
      is the default and a page overrides the three accent variables on its root.
      Every `accent` utility reads the variable, so nothing else has to change. */
   --color-accent: #06b6d4;

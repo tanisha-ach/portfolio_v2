@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
 import CaseStudySidebar from "./components/CaseStudySidebar";
 import SectionHeader from "./components/SectionHeader";
+import StickyStack from "./components/StickyStack";
 import TeamCluster from "./components/TeamCluster";
 import CopyEmail from "./components/CopyEmail";
 import useScrollSpy from "./hooks/useScrollSpy";
@@ -153,46 +153,23 @@ function Feature({ feature }) {
   );
 }
 
-// On wide screens the section header pins while the feature cards stack up
-// underneath it. Below lg both go back to normal flow: a stack of full-height
-// cards covering each other reads as broken on a small screen, and the pinned
-// header would eat most of the viewport.
 function FinalDesign() {
-  const headerRef = useRef(null);
-  const [headerHeight, setHeaderHeight] = useState(0);
-
-  useEffect(() => {
-    const el = headerRef.current;
-    if (!el) return;
-    const measure = () => setHeaderHeight(el.getBoundingClientRect().height);
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section id="final-design" className="scroll-mt-24 lg:scroll-mt-8">
-      <div ref={headerRef} className={`z-20 bg-page pt-11 pb-6 lg:sticky lg:top-0 ${GUTTER}`}>
-        <SectionHeader kicker="Prototyping" />
-        <Heading>{finalDesign.heading}</Heading>
-        <Body>{finalDesign.body}</Body>
-      </div>
-
-      <div className={GUTTER}>
-        {/* The gap between cards is the dwell time before the next arrives. The
-            opaque background is what covers the card beneath — not decoration,
-            so it can't be dropped. */}
-        <div className="flex w-full max-w-276 flex-col gap-12 lg:gap-30">
-          {features.map((feature) => (
-            <div key={feature.number} className="static lg:sticky" style={{ top: headerHeight }}>
-              <div className="bg-page lg:pt-5">
-                <Feature feature={feature} />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <StickyStack
+        gutter={GUTTER}
+        header={
+          <>
+            <SectionHeader kicker="Prototyping" />
+            <Heading>{finalDesign.heading}</Heading>
+            <Body>{finalDesign.body}</Body>
+          </>
+        }
+      >
+        {features.map((feature) => (
+          <Feature key={feature.number} feature={feature} />
+        ))}
+      </StickyStack>
     </section>
   );
 }
@@ -250,7 +227,7 @@ export default function App() {
         </div>
 
         {/* Context & challenge */}
-        <section id="context" className={`scroll-mt-24 pt-11 lg:scroll-mt-8 ${GUTTER}`}>
+        <section id="context" className={`scroll-mt-24 pt-16 lg:scroll-mt-8 ${GUTTER}`}>
           <div className="flex flex-col items-start gap-6 lg:flex-row">
             <div className="flex flex-1 flex-col">
               <SectionHeader kicker="Context" />
@@ -273,7 +250,7 @@ export default function App() {
         </section>
 
         {/* Research */}
-        <section id="research" className={`scroll-mt-24 pt-11 lg:scroll-mt-8 ${GUTTER}`}>
+        <section id="research" className={`scroll-mt-24 pt-16 lg:scroll-mt-8 ${GUTTER}`}>
           <SectionHeader kicker="Research" />
           <Heading>{research.heading}</Heading>
           <div className="flex flex-col items-start gap-6 pb-6 lg:flex-row">
@@ -297,7 +274,7 @@ export default function App() {
         </section>
 
         {/* Ideation */}
-        <section id="ideation" className={`scroll-mt-24 pt-11 lg:scroll-mt-8 ${GUTTER}`}>
+        <section id="ideation" className={`scroll-mt-24 pt-16 lg:scroll-mt-8 ${GUTTER}`}>
           <SectionHeader kicker="Ideation directions" />
           <Heading>{ideation.heading}</Heading>
           <div className="mb-6">
@@ -322,7 +299,7 @@ export default function App() {
         </section>
 
         {/* Usability testing results */}
-        <section id="results" className={`scroll-mt-24 pt-11 lg:scroll-mt-8 ${GUTTER}`}>
+        <section id="results" className={`scroll-mt-24 pt-16 lg:scroll-mt-8 ${GUTTER}`}>
           <SectionHeader kicker="User testing results" />
           <Heading>{results.heading}</Heading>
           <div className="mb-6">
@@ -348,7 +325,7 @@ export default function App() {
 
         {/* Business impact — same amber treatment as the headline testing
             result, so the two payoff moments of the case study read as a pair. */}
-        <section id="impact" className={`scroll-mt-24 pt-11 lg:scroll-mt-8 ${GUTTER}`}>
+        <section id="impact" className={`scroll-mt-24 pt-16 lg:scroll-mt-8 ${GUTTER}`}>
           <div className="border-2 border-accent-line border-l-[3px] border-l-accent bg-accent/8 p-5 sm:p-8">
             <div className="mb-4">
               <Label accent>{impact.kicker}</Label>
@@ -362,7 +339,7 @@ export default function App() {
         </section>
 
         {/* Future of the design */}
-        <section id="future" className={`scroll-mt-24 pt-11 lg:scroll-mt-8 ${GUTTER}`}>
+        <section id="future" className={`scroll-mt-24 pt-16 lg:scroll-mt-8 ${GUTTER}`}>
           <SectionHeader kicker="Future of the design" />
           <div className="mb-6">
             <Body>{future.body}</Body>
@@ -380,7 +357,7 @@ export default function App() {
         </section>
 
         {/* Learnings */}
-        <section id="learnings" className={`scroll-mt-24 pt-11 lg:scroll-mt-8 ${GUTTER}`}>
+        <section id="learnings" className={`scroll-mt-24 pt-16 lg:scroll-mt-8 ${GUTTER}`}>
           <SectionHeader kicker="Learnings" />
           <div className="mb-6">
             <Body>{learnings.body}</Body>

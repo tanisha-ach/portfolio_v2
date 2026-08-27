@@ -1,9 +1,10 @@
 import PortfolioShell from "../components/PortfolioShell";
+import StatusBadges from "../components/StatusBadges";
 import { statement, body, stats } from "../data/about";
 
 export default function About() {
   return (
-    <PortfolioShell activeTab="About">
+    <PortfolioShell activeTab="About" badges={<StatusBadges />}>
       <div className="flex flex-col items-start self-stretch">
         <h1 className="mb-7 max-w-205 font-black text-[30px] leading-[1.25] tracking-[-0.01em] text-white sm:text-[36px] lg:text-[44px] lg:leading-[1.18]">
           {statement}

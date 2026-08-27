@@ -134,8 +134,17 @@ export default function Aimly() {
                 carry the source's own ratio
                 and derive its width, so nothing is cropped or letterboxed. It
                 loops, is silent and has no controls — art, not something to
-                operate; `playsInline` keeps iOS from going fullscreen. */}
-            <div className="aspect-[532/1080] h-[75vh] shrink-0 self-center overflow-hidden border border-line bg-surface lg:col-span-3 lg:col-start-1 lg:row-start-1 lg:ml-[75%] lg:-translate-x-1/2 lg:justify-self-start lg:self-start">
+                operate; `playsInline` keeps iOS from going fullscreen.
+                The corner radius traces the phone in the recording rather than
+                sitting outside it: measured off the source, the device's body
+                straightens 80px in on a 532x1080 frame. Percentages so it holds
+                as the frame scales — a fixed radius would drift at other
+                viewport heights. No border or surface behind it either; with the
+                shape matched there is nothing left for them to describe. */}
+            <div
+              style={{ borderRadius: "15% / 7.4%" }}
+              className="aspect-[532/1080] h-[75vh] shrink-0 self-center overflow-hidden lg:col-span-3 lg:col-start-1 lg:row-start-1 lg:ml-[75%] lg:-translate-x-1/2 lg:justify-self-start lg:self-start"
+            >
               <video
                 src="/aimly-dashboard-prototype.mp4"
                 className="h-full w-full object-cover"

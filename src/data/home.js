@@ -30,6 +30,9 @@ export const projects = [
     href: "/aimly",
     // Pulls the sidebar accent toward this card's own hue while hovered.
     accent: "#38B440",
+    // Room the narrow card holds open above its copy. Short enough here that
+    // the title tucks in beside the phone, as the design has it.
+    reserve: "15rem",
     gradient: "linear-gradient(108.84deg in oklab, #098511 54%, #38B440 54%)",
     // `shift` is how far the mockup slides on card hover, in px — negative is
     // up. The two phones move in opposite directions so the pair opens out
@@ -59,7 +62,7 @@ export const projects = [
         right: 275,
         top: -16,
         shift: -12,
-        mobile: { width: "38.3%", right: "6.2%", top: "4.1%" },
+        mobile: { width: "34%", right: "7.2%", top: "4.6%" },
       },
     ],
   },
@@ -72,6 +75,9 @@ export const projects = [
     tags: ["0 → 1", "UX Research", "UX Design"],
     href: "/upgrade-hmc",
     accent: "#06B6D4",
+    // Taller: this card's artwork runs the full width, so nothing can sit
+    // alongside it and the copy has to start below.
+    reserve: "18rem",
     gradient:
       "linear-gradient(103.59deg in oklab, oklab(30.8% -0.031 -0.056) 0.29%, oklab(50% -0.055 -0.106) 54.9%, oklab(71.5% -0.103 -0.073) 96.5%)",
     // The racks stay put; only the laptop reacts, so the zoom reads as the
@@ -83,7 +89,7 @@ export const projects = [
         height: 403,
         right: 60,
         top: -94,
-        mobile: { width: "95.6%", right: "-55%", top: "-19.4%" },
+        mobile: { width: "119.5%", right: "-55%", top: "-27%" },
       },
       {
         src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01KYDWSSYWKDHRGZ85XWXZ704C.png",
@@ -92,7 +98,7 @@ export const projects = [
         right: 197,
         top: -1,
         zoom: 1.5,
-        mobile: { width: "90.4%", right: "-49%", top: "4.8%" },
+        mobile: { width: "113%", right: "-49%", top: "4.8%" },
       },
     ],
   },

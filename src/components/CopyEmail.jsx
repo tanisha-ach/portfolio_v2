@@ -76,8 +76,14 @@ export default function CopyEmail({ email, children, label }) {
     timer.current = setTimeout(() => setCopied(false), 2000);
   };
 
+  // An icon trigger sits in a flex row, where an inline-block wrapper would add
+  // a line box under the glyph and push it off the row's centre. Text keeps
+  // inline-block so it stays on the prose baseline.
   return (
-    <span ref={wrapRef} className="relative inline-block align-baseline">
+    <span
+      ref={wrapRef}
+      className={`relative align-baseline ${children ? "inline-flex" : "inline-block"}`}
+    >
       <button
         type="button"
         onClick={copy}

@@ -22,7 +22,7 @@ export default function Home() {
               onMouseLeave={() => setAccent(null)}
               onFocus={() => setAccent(project.accent)}
               onBlur={() => setAccent(null)}
-              className="group relative flex h-93 w-full shrink-0 items-end overflow-hidden rounded-2xl px-5.5 py-6 transition-transform duration-300 ease-out hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100 lg:h-54.5 lg:min-h-45 lg:items-center lg:p-8"
+              className="group relative flex aspect-[343/442] w-full shrink-0 items-end overflow-hidden rounded-2xl px-5.5 py-6 transition-transform duration-300 ease-out hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100 lg:aspect-auto lg:h-54.5 lg:min-h-45 lg:items-center lg:p-8"
               style={{ backgroundImage: project.gradient }}
             >
               {/* The wide layout positions its art inside the text column — the
@@ -37,7 +37,9 @@ export default function Home() {
                       className="absolute bg-cover bg-center bg-no-repeat"
                       style={{
                         width: img.mobile.width,
-                        height: img.mobile.height,
+                        // Height comes from the artwork's own ratio, so only the
+                        // width needs declaring per breakpoint.
+                        aspectRatio: `${img.width} / ${img.height}`,
                         right: img.mobile.right,
                         top: img.mobile.top,
                         backgroundImage: `url(${img.src})`,

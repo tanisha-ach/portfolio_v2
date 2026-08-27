@@ -41,7 +41,9 @@ export const projects = [
       // the design aligns them — the card keeps its 32px of gradient beyond. `mobile` is
       // the same artwork re-placed for the narrow card; an image with no
       // `mobile` block sits out that breakpoint entirely — the mobile design
-      // shows one phone where the wide card shows two.
+      // shows one phone where the wide card shows two. Mobile placements are
+      // percentages, not pixels: the narrow card is sized by aspect, so a px
+      // offset would drift as the viewport narrows.
       {
         src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01M0ZT48RDS7DDD2JZ0VJJNBQ2.png",
         width: 199,
@@ -57,7 +59,7 @@ export const projects = [
         right: 275,
         top: -16,
         shift: -12,
-        mobile: { width: 111, height: 228, right: 18, top: 15 },
+        mobile: { width: "38.3%", right: "6.2%", top: "4.1%" },
       },
     ],
   },
@@ -81,7 +83,7 @@ export const projects = [
         height: 403,
         right: 60,
         top: -94,
-        mobile: { width: 328, height: 328, right: -189, top: -72 },
+        mobile: { width: "95.6%", right: "-55%", top: "-19.4%" },
       },
       {
         src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01KYDWSSYWKDHRGZ85XWXZ704C.png",
@@ -90,7 +92,7 @@ export const projects = [
         right: 197,
         top: -1,
         zoom: 1.5,
-        mobile: { width: 310, height: 189, right: -168, top: 18 },
+        mobile: { width: "90.4%", right: "-49%", top: "4.8%" },
       },
     ],
   },

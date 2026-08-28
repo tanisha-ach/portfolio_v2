@@ -6,6 +6,13 @@ export const statement =
 export const body =
   "My brain loves untangling complex technical systems into elegant, trustworthy experiences. Working in consulting let me explore a range of industries — I've worked as a researcher and designer for cloud, e-commerce, enterprise B2B and consumer products. The domain varies, but it taught me one thing: good UX is about designing the whole experience, not just the interface.";
 
+// The two pills that sit over the portrait on narrow screens. On lg the rail
+// carries the photo instead, and these have nowhere to hang.
+export const pills = [
+  { icon: "pin", label: "AUS \u2194 NYC" },
+  { icon: "briefcase", label: "Hire Me!" },
+];
+
 export const stats = [
   { figure: "6+", label: "years designing\nend-to-end products" },
   { figure: "4", label: "industries, from fintech\nto connected devices" },

@@ -217,8 +217,13 @@ export default function PortfolioShell({ activeTab, badges = null, accent = ACCE
           </button>
         </div>
 
-        <div className="hidden lg:flex lg:w-fit lg:flex-col lg:items-start lg:gap-3">
-          <div className="self-stretch text-lg leading-6.5 text-white">{profile.tagline}</div>
+        {/* The byline runs under the name at every width. The skill pills stay
+            behind until lg, where the rail has room for them. */}
+        <div className="mt-5 self-stretch text-lg leading-6.5 text-white lg:mt-0 lg:w-fit">
+          {profile.tagline}
+        </div>
+
+        <div className="hidden lg:mt-2 lg:flex lg:w-fit lg:flex-col lg:items-start lg:gap-3">
           <div className="flex flex-wrap gap-x-4 gap-y-2 self-stretch">
             {skillTags.map((tag) => (
               <div
@@ -243,8 +248,10 @@ export default function PortfolioShell({ activeTab, badges = null, accent = ACCE
             const active = tab.label === activeTab;
             const className =
               "block w-fit shrink-0 whitespace-nowrap px-4 pb-3 text-[15px] leading-4.5 " +
+              // The marker is a bar rather than a border, because a border
+              // cannot carry a radius on only its top two corners.
               (active
-                ? "border-b-2 border-[#f5c842] font-semibold text-white"
+                ? "relative font-semibold text-white after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:rounded-t-2xl after:bg-[var(--accent)] after:transition-colors after:content-['']"
                 : "text-[#666] transition-colors hover:text-[#aaa]");
 
             // Tabs without a destination yet render as plain text rather than

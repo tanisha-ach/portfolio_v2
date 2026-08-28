@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 const BackLink = ({ className = "" }) => (
   <a
     href="/"
@@ -22,6 +24,29 @@ export default function CaseStudySidebar({ nav, activeId }) {
     nav.findIndex((n) => n.id === activeId)
   );
   const progress = ((activeIndex + 1) / nav.length) * 100;
+  const railRef = useRef(null);
+  const settled = useRef(false);
+
+  // The rail is wider than a phone, so the section being read can sit off the
+  // right edge with nothing on screen to say which one is current. Keep the
+  // active tab centred as the page scrolls past each section. The first pass is
+  // instant so the bar does not slide on load, and a reduced-motion preference
+  // turns the animation off entirely.
+  useEffect(() => {
+    const rail = railRef.current;
+    const tab = rail?.querySelector('[data-active="true"]');
+    if (!rail || !tab) return;
+
+    const target = tab.offsetLeft - (rail.clientWidth - tab.offsetWidth) / 2;
+    const left = Math.max(0, Math.min(target, rail.scrollWidth - rail.clientWidth));
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // A hidden document drops smooth scrolls on the floor, which would leave the
+    // rail parked on an old section when the tab comes back.
+    const animate = settled.current && !reduced && !document.hidden;
+
+    rail.scrollTo({ left, behavior: animate ? "smooth" : "auto" });
+    settled.current = true;
+  }, [activeId]);
 
   return (
     <>
@@ -29,21 +54,27 @@ export default function CaseStudySidebar({ nav, activeId }) {
           section list scrolls sideways rather than wrapping, so the bar keeps a
           fixed height and never pushes the page around. */}
       <div className="sticky top-0 z-30 border-b border-line bg-page lg:hidden">
-        <div className="flex items-center justify-between px-5 py-3 sm:px-8">
+        <div className="flex items-center justify-between px-5 pt-4 pb-4 sm:px-8">
           <BackLink />
           <span className="text-[11px] tracking-[0.04em] text-label">
             {activeIndex + 1}/{nav.length}
           </span>
         </div>
-        <ul className="flex gap-1 overflow-x-auto px-5 pb-2.5 sm:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {/* The active tab's underline lands on the bar's own bottom rule rather
+            than floating above it, so the header closes on one line, not two. */}
+        <ul
+          ref={railRef}
+          className="flex gap-1 overflow-x-auto scroll-px-5 px-5 sm:scroll-px-8 sm:px-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
           {nav.map((item) => {
             const active = item.id === activeId;
             return (
               <li key={item.id} className="shrink-0">
                 <a
                   href={`#${item.id}`}
+                  data-active={active}
                   className={
-                    "block whitespace-nowrap border-b-2 px-2 pb-1.5 text-[13px] transition-colors " +
+                    "-mb-px block whitespace-nowrap border-b-[3px] px-2.5 pb-3 text-[13px] transition-colors " +
                     (active
                       ? "border-accent font-semibold text-accent"
                       : "border-transparent font-medium text-label")

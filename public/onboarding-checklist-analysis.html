@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Onboarding Checklist Competitive Analysis</title>
+</head>
+<body>
+
+<style>:root{color-scheme:light dark;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}}:root[data-theme="dark"]{color-scheme:dark;--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}:root[data-theme="light"]{color-scheme:light}@media print{:root,:root[data-theme="dark"]{color-scheme:light;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}}body{background:var(--md-bg);color:var(--md-text);max-width:720px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:10px;font:14px/1.55 -apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',sans-serif;overflow-wrap:break-word}body>:first-child{margin-top:0}h1,h2,h3,h4,h5,h6{margin:6px 0 0;line-height:1.25;font-weight:600;text-wrap:balance}h1{font-size:1.35em}h2{font-size:1.15em;color:var(--md-muted)}h3,h4,h5,h6{font-size:1em}p,ul,ol,blockquote,table,pre,hr{margin:0}strong{font-weight:600}a{color:var(--md-link);text-decoration:none}a:hover{text-decoration:underline}ul,ol{display:flex;flex-direction:column;gap:6px;padding-left:22px}ul{list-style:disc}ol{list-style:decimal}:is(li,td,th)>*+:is(p,ul,ol,blockquote){margin-top:6px}blockquote{display:flex;flex-direction:column;gap:10px;border-left:2px solid var(--md-rule);padding-left:10px;color:var(--md-muted)}:not(pre)>code{background:var(--md-fill);padding:1px 3px;border-radius:4px;font:.92em 'SF Mono',ui-monospace,Menlo,Consolas,monospace}a>code{background:none;color:inherit}pre{background:var(--md-fill);padding:10px 12px;border-radius:6px;overflow-x:auto;font:12px/1.5 'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-block:4px}pre code{background:none;padding:0;font:inherit}table{width:100%;border-collapse:separate;border-spacing:2px;font:inherit}th,td{padding:6px 8px;border-radius:3px;text-align:left;vertical-align:top}th{background:var(--md-fill-strong);font-weight:600}td{background:var(--md-fill)}:is(th,td) :not(pre)>code{background:transparent}hr{border:0;border-top:1px solid var(--md-rule-strong);margin-block:10px}img{max-width:100%;height:auto;border-radius:4px}</style>
+<h1>Onboarding Checklist Competitive Analysis</h1>
+<h3>Web vs. Mobile &quot;Getting Started&quot; Patterns — with a focus on RANDOM-ORDER completion</h3>
+<p><em>Compiled via Mobbin, 2026-07-31. All screenshots referenced are linked to their canonical Mobbin URL.</em></p>
+<hr>
+<h2>Key constraint driving this analysis</h2>
+<p>The checklist being designed can be completed in <strong>any order</strong> — no locked steps, no forced sequence. So every example below is evaluated first on <em>how it signals order (or the absence of it)</em>, before anything else.</p>
+<hr>
+<h2>Comparison table</h2>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Platform</th>
+<th>Where it lives</th>
+<th>Ordering cues</th>
+<th>Row anatomy</th>
+<th>Completion control/feedback</th>
+<th>Progress indicator</th>
+<th>Dismiss/skip behavior</th>
+<th>Completion state</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://mobbin.com/screens/70d69e07-588c-4c40-bca1-34a01ad05b21">Apollo</a></td>
+<td>Web</td>
+<td>Persistent panel on home dashboard (&quot;Onboarding hub&quot; in left nav, 35% badge)</td>
+<td>No numbers, no lines. Two tabs (Setup / Recommendations) — items inside a tab are unordered rows</td>
+<td>Icon, category label (small caps), title, per-row Start/Finish/Completed button + expand chevron</td>
+<td>Button changes state: Start → progress bar → Finish → grey &quot;Completed&quot;</td>
+<td>X of Y via sidebar badge (35% Completed)</td>
+<td>Lives permanently in left nav (&quot;Onboarding hub&quot;); not modal, always reachable</td>
+<td>Not observed (badge presumably disappears at 100%)</td>
+</tr>
+<tr>
+<td><a href="https://mobbin.com/screens/b420275a-ee5c-4eb2-a767-5615edcf62c5">Klaviyo</a></td>
+<td>Web</td>
+<td>Full dashboard home page</td>
+<td><strong>Hybrid</strong>: 4 numbered left-tab <em>categories</em> (1 Set up account → 4 Recover lost sales) you can click into in any order, but <em>within</em> a category tasks display as a connected vertical checkmark chain implying sequence</td>
+<td>Checkmark/circle, title, and for the active task a description + primary button (&quot;Invite&quot;) + &quot;Skip for now&quot;</td>
+<td>Green checkmark + strikethrough-style dimming on completion</td>
+<td>Header &quot;Get started 45% complete&quot; + per-category chain</td>
+<td>&quot;Dismiss this page&quot; top right; per-task &quot;Skip for now&quot;</td>
+<td>Not observed</td>
+</tr>
+<tr>
+<td><a href="https://mobbin.com/screens/d6c8a960-3253-4ca4-b4aa-06e902fa0e4e">Vanta</a></td>
+<td>Web</td>
+<td>Persistent &quot;Finish Starter Guide&quot; nav item → expands to full section</td>
+<td>No numbers. Grouped into collapsible sections (Launch policies, Prove compliance, Scope resources, Prepare evidence), each independently expandable — <strong>but</strong> sub-items inside &quot;Prove your compliance&quot; are visually indented/greyed suggesting soft dependency</td>
+<td>Icon, group title + description, &quot;X of Y complete&quot; per group, chevron to expand</td>
+<td>Per-group fraction; icon changes per item</td>
+<td>Global &quot;15/20 tasks completed&quot; + purple progress bar in nav</td>
+<td>Persistent sidebar entry, always reachable, no explicit dismiss seen</td>
+<td>Not observed</td>
+</tr>
+<tr>
+<td><a href="https://mobbin.com/screens/2c3856d6-86aa-4ccb-a189-96c96364342d">Remote</a></td>
+<td>Web</td>
+<td>Full-screen modal (&quot;Get started with Recruit&quot;)</td>
+<td><strong>Forces partial order</strong>: groups unlock top-to-bottom — &quot;Find candidates&quot; items 3–4 show 🔒 lock icons until items 1–2 in that group are done</td>
+<td>Icon, group header with &quot;X tasks left&quot; + chevron, individual rows with chevron or lock icon</td>
+<td>Locked rows literally can&#39;t be clicked</td>
+<td>Per-group &quot;N tasks left&quot;</td>
+<td>&quot;X&quot; closes modal; re-entry point not shown</td>
+<td>Not observed — <strong>flag: locking mechanism to avoid</strong></td>
+</tr>
+<tr>
+<td><a href="https://mobbin.com/screens/a8c412e9-2b79-42db-8795-117e568e1dd5">Notion</a></td>
+<td>Web</td>
+<td>Inline content block embedded in a workspace page (not a dedicated widget)</td>
+<td>Plain checkboxes in a bulleted list — zero ordering cues, fully free-form, first box is pre-checked (&quot;Create an account&quot;) while rest are open</td>
+<td>Native checkbox + bold lead-in phrase + description text</td>
+<td>Standard checkbox toggle, no animation</td>
+<td>None (no counter, no bar)</td>
+<td>N/A — it&#39;s just a doc, user can delete/edit it</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td><a href="https://mobbin.com/screens/1942ff02-df9d-4266-a340-4eb133a0ffb8">Asana</a></td>
+<td>Web</td>
+<td>Card widget on workspace overview page</td>
+<td>No numbers. <strong>3 parallel cards side-by-side</strong> (Add team description / Add work / Add teammates) — explicitly non-sequential layout</td>
+<td>Icon, title, one-line description, inline action</td>
+<td>Green check overlays completed card; others stay as call-to-action cards</td>
+<td>&quot;1 of 3 steps completed&quot; header</td>
+<td>&quot;X&quot; dismisses the whole widget</td>
+<td>Not observed</td>
+</tr>
+<tr>
+<td><a href="https://mobbin.com/screens/b1e63cab-1f31-4364-aff8-b78a86c928ea">Airtable</a></td>
+<td>Web</td>
+<td>AI-chat sidebar, numbered list &quot;What&#39;s next?&quot; 1–5</td>
+<td><strong>Sequential wizard</strong>, not a checklist — items are numbered instructions, and a separate &quot;Step 6 of 6&quot; interface tour uses Previous/Next</td>
+<td>Numbered line item + link</td>
+<td>Clicking a numbered link performs the action; no independent toggle</td>
+<td>&quot;Step X of Y&quot; tour counter</td>
+<td>&quot;Start Over&quot; available; no per-item skip</td>
+<td>Not observed — <strong>not a true random-order checklist</strong></td>
+</tr>
+<tr>
+<td><a href="https://mobbin.com/screens/2f59d9cd-1aee-43ac-ad4b-1e3e7275bdf5">Loom</a></td>
+<td>Web</td>
+<td>Collapsible panel pinned bottom-left of app</td>
+<td>No numbers, checkbox rows, some expand to show sub-instructions (e.g. &quot;Download Loom&quot; expands to show Chrome-extension install + desktop-app download as two parallel options)</td>
+<td>Checkbox, title, expand chevron; expanded state shows description + 2 CTA buttons</td>
+<td>Checkbox fills blue-outline circle on completion</td>
+<td>Thin progress bar under header, no fraction shown</td>
+<td>Collapse via chevron; &quot;Dismiss checklist&quot; button appears at 100%</td>
+<td>⭐ Star icon + &quot;Ready for prime time! Dismiss checklist&quot;</td>
+</tr>
+<tr>
+<td><a href="https://mobbin.com/screens/9111bcbb-ed06-4eb8-ad6e-b174f77ae9fb">Deel HR</a></td>
+<td><strong>iOS</strong></td>
+<td>Full-width card on home tab (&quot;Next steps&quot;)</td>
+<td>No numbers, no connecting lines — flat list, clearly independent rows</td>
+<td>Icon, title (as tappable link), pill badge (&quot;DONE&quot; / &quot;NOT STARTED&quot;)</td>
+<td>Pill badge swaps color/text; row visually recedes (grey) once done</td>
+<td>None (no X/Y or %)</td>
+<td>Not shown persisting past the visible card</td>
+<td>Not observed</td>
+</tr>
+<tr>
+<td><a href="https://mobbin.com/screens/5211f64d-c719-46b1-a1c2-2762992d794d">Peloton</a></td>
+<td><strong>iOS</strong></td>
+<td>Dedicated full-screen &quot;Your getting started checklist&quot; (entered from a home-tab card)</td>
+<td>No numbers. Each row expands independently via chevron (any row, not just the &quot;next&quot; one) — but a segmented progress bar at top <em>visually</em> reads left-to-right</td>
+<td>Circle checkbox, title, expandable description + primary CTA button</td>
+<td>Circle fills on completion</td>
+<td>Segmented bar (5 segments, filled = done) — <strong>count, not sequence</strong></td>
+<td>Home-tab card can be dismissed/re-entered; no explicit skip seen</td>
+<td>Not observed</td>
+</tr>
+<tr>
+<td><a href="https://mobbin.com/screens/c80a9ae9-9e0f-40d9-827d-578b33a0fb1f">Cleo AI</a></td>
+<td><strong>iOS</strong></td>
+<td>Full-screen list, part of a linear signup/activation flow</td>
+<td><strong>Explicitly sequential</strong>: numbered pills 1–5, current step in solid dark fill with chevron, future steps greyed and un-tappable</td>
+<td>Number/checkmark pill, title, description, chevron on active row only</td>
+<td>Checkmark replaces number on completion; next number &quot;lights up&quot;</td>
+<td>Implicit via pill state (no bar/fraction)</td>
+<td>None — this is a forced funnel, not a dismissible checklist</td>
+<td>Not observed — <strong>flag: don&#39;t copy, this is a locked wizard wearing checklist clothing</strong></td>
+</tr>
+<tr>
+<td><a href="https://mobbin.com/screens/dbedb20e-1dc1-44dd-ac00-167aa36f776c">Linktree</a></td>
+<td><strong>iOS</strong></td>
+<td>Bottom-sheet modal, re-openable</td>
+<td>No numbers. Every row independently expandable (chevron), each with its own &quot;Skip&quot;</td>
+<td>Circle checkbox, title, expand chevron; expanded shows description + primary button + &quot;Skip&quot; text link</td>
+<td>Circle → green check + strikethrough text</td>
+<td>Header &quot;1/6&quot; + full-width progress bar</td>
+<td>Per-item &quot;Skip&quot;; sheet has &quot;X&quot; to close and reopen later</td>
+<td>✅ <strong>Proof of true random order</strong>: the <em>last</em> listed item (&quot;Share your Linktree&quot;) is already checked/struck-through while item 2 is still open — order of completion ≠ order of display</td>
+</tr>
+<tr>
+<td><a href="https://mobbin.com/screens/b524a06c-8757-4348-ac5c-e0708e564150">Origin</a></td>
+<td><strong>iOS</strong></td>
+<td>Bottom-sheet modal (&quot;Your guide&quot;)</td>
+<td>No numbers, no lines</td>
+<td>Icon, title, chevron to expand</td>
+<td>Checked items get a checkmark + strikethrough</td>
+<td>Circular ring &quot;1/4&quot; at top of sheet</td>
+<td>&quot;X&quot; closes sheet, presumably re-openable from a persistent entry point</td>
+<td>✅ Same proof pattern as Linktree — bottom item (&quot;Link your accounts&quot;) is done while items above are still open</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Web vs. Mobile — patterns compared</h2>
+<p><strong>What web does well:</strong></p>
+<ul>
+<li><strong>Persistent, low-friction re-entry.</strong> Apollo, Vanta, and Loom all keep a permanent nav item or sidebar trigger, so the checklist survives navigation and is never &quot;lost.&quot; This matters a lot for a random-order checklist — the user needs to be able to leave and come back to <em>any</em> item without hunting for the entry point.</li>
+<li><strong>Grouping without forcing sequence.</strong> Vanta and Klaviyo both use collapsible category groups, which is a good pattern for a large item count (15–20 tasks) — group by theme, not by required order, and let each group carry its own sub-progress.</li>
+<li><strong>Richer row real estate.</strong> Web rows can carry a description, an icon, and an inline CTA button all in one line (Apollo, Remote), which mobile has to earn back via expand/collapse.</li>
+</ul>
+<p><strong>What mobile does well:</strong></p>
+<ul>
+<li><strong>Expand-in-place instead of navigation.</strong> Peloton, Linktree, and Origin all use an accordion pattern — tap a row, it expands inline with description + CTA, no full-screen navigation required. This is the single most reusable pattern for a random-order list: every row behaves identically and independently, which <em>is</em> the free-order signal.</li>
+<li><strong>Bottom-sheet re-entry.</strong> Linktree and Origin surface the checklist as a bottom sheet that can be dismissed and is implied to be re-invokable from a persistent home affordance (a badge or menu item) — lighter-weight than a full dashboard widget.</li>
+<li><strong>Compact progress framing.</strong> A ring (&quot;1/4&quot;) or a short segmented bar reads faster at small sizes than a percentage or long bar.</li>
+</ul>
+<p><strong>Divergences:</strong></p>
+<ul>
+<li>Web checklists lean on <strong>buttons per row</strong> (&quot;Start&quot;, &quot;Get Started&quot;, &quot;Invite&quot;) since there&#39;s room; mobile leans on <strong>tap-to-expand-then-CTA</strong>, keeping the collapsed state to a single line.</li>
+<li>Mobile is far more likely to gate the checklist behind a <strong>separate full-screen entry point</strong> reached from a home-tab teaser card (Peloton, Deel) rather than showing the whole thing inline, because vertical space is scarce.</li>
+<li>Web is more likely to <strong>hybridize the checklist with a stepper</strong> (Klaviyo&#39;s numbered category tabs, Airtable&#39;s numbered &quot;what&#39;s next&quot;) — a pattern that&#39;s easy to mistake for a checklist but is actually closer to a wizard. Be careful not to import this pattern by accident.</li>
+</ul>
+<hr>
+<h2>Random-order handling — the focused section</h2>
+<h3>Products that handle non-linear checklists well</h3>
+<ol>
+<li><strong><a href="https://mobbin.com/screens/dbedb20e-1dc1-44dd-ac00-167aa36f776c">Linktree</a> (iOS)</strong> — the strongest example found. Six flat rows, no numbers, no connecting line. Each row is an independent accordion with its own &quot;Skip&quot; link. Critically, the screenshot evidence shows the <em>last</em> item already completed while an earlier item is still open — direct proof the product supports and correctly renders out-of-order completion without visual confusion.</li>
+<li><strong><a href="https://mobbin.com/screens/b524a06c-8757-4348-ac5c-e0708e564150">Origin</a> (iOS)</strong> — same proof pattern: a circular &quot;1/4&quot; ring (which only communicates <em>count</em>, not position) plus a flat expandable list. Because the ring never implies &quot;step 1 of 4&quot; positionally, the completed item can be anywhere in the list without looking broken.</li>
+<li><strong><a href="https://mobbin.com/screens/9111bcbb-ed06-4eb8-ad6e-b174f77ae9fb">Deel HR</a> (iOS)</strong> — the cleanest visual language: no icons implying progression, no lines, just title + status pill (Done / Not Started). This is probably the simplest pattern to copy if you want minimal design overhead.</li>
+<li><strong><a href="https://mobbin.com/screens/d6c8a960-3253-4ca4-b4aa-06e902fa0e4e">Vanta</a> (Web)</strong> — good for <em>large</em> item counts. Grouping by theme (not by sequence) with independent per-group fractions lets users tackle whichever category matters to them first, while still giving structure.</li>
+<li><strong><a href="https://mobbin.com/screens/1942ff02-df9d-4266-a340-4eb133a0ffb8">Asana</a> (Web)</strong> — the 3-card side-by-side layout is an explicit, almost architectural statement that &quot;these are parallel, not sequential&quot; — worth studying for a short (3–5 item) checklist specifically.</li>
+<li><strong><a href="https://mobbin.com/screens/5211f64d-c719-46b1-a1c2-2762992d794d">Peloton</a> (iOS)</strong> — every row&#39;s chevron behaves identically regardless of completion state of other rows; the only sequence-like element (the segmented bar) is purely a counter, not a gate.</li>
+</ol>
+<p><strong>Specific UI cues that signal &quot;any order&quot; (use these):</strong></p>
+<ul>
+<li>Flat vertical list, <strong>no connecting line</strong> between rows</li>
+<li><strong>No numbers</strong> on rows (use checkboxes/circles only)</li>
+<li>Progress shown as a <strong>fraction or ring</strong> (&quot;2 of 5&quot;), never as a positional stepper (&quot;Step 2 of 5&quot;)</li>
+<li>Every row&#39;s interaction affordance (chevron, button) is <strong>identical regardless of position</strong> — nothing is greyed out, disabled, or locked</li>
+<li>Status communicated via <strong>pill/badge text</strong> (&quot;Done&quot;/&quot;Not started&quot;) rather than sequential iconography</li>
+</ul>
+<h3>Products to NOT copy (they force or imply sequence)</h3>
+<ul>
+<li><strong><a href="https://mobbin.com/screens/c80a9ae9-9e0f-40d9-827d-578b33a0fb1f">Cleo AI</a> (iOS)</strong> — numbered pills 1–5, future steps visibly greyed and untappable. This is a linear funnel, not a checklist. Copying this pattern for a random-order feature would actively mislead users into thinking they must go in order.</li>
+<li><strong><a href="https://mobbin.com/screens/2c3856d6-82aa-4ccb-a189-96c96364342d">Remote</a> (Web)</strong> — uses literal 🔒 lock icons on later items within a group until earlier ones are complete. This is a hard sequence gate, the opposite of what&#39;s needed here.</li>
+<li><strong><a href="https://mobbin.com/screens/5552fd70-9657-4e4b-ba65-43125e7f74f6">N26</a> (iOS)</strong> — vertical checklist connected by a continuous line with a single filled &quot;current step&quot; indicator — classically a progress-tracker visual language (think: shipping tracker), which reads as sequential even if the backend doesn&#39;t enforce it. Avoid the connecting-line treatment for this reason.</li>
+<li><strong><a href="https://mobbin.com/screens/b1e63cab-1f31-4364-aff8-b78a86c928ea">Airtable</a> / <a href="https://mobbin.com/screens/cad56e95-1452-4c2f-b511-df54b8d370a5">Figma Dev Mode</a> (Web)</strong> — both use numbered &quot;01/02/03/04&quot; wizards with Back/Next navigation. Not checklists at all — full step gating with no way to jump ahead.</li>
+<li><strong><a href="https://mobbin.com/screens/b420275a-ee5c-4eb2-a767-5615edcf62c5">Klaviyo</a> (Web)</strong> — worth a caveat: the category tabs are freely clickable (good), but the checkmark chain <em>within</em> a category visually implies &quot;do these five in order,&quot; even though nothing technically blocks skipping. If you group tasks like this, don&#39;t add the connecting checkmark chain — it undercuts the free-order message.</li>
+</ul>
+<h3>Products Mobbin did not surface a genuine onboarding-checklist screen for</h3>
+<p>Per your instruction not to substitute silently — for these named products, search returned only forced-sequence wizards or unrelated screens, <strong>not</strong> a persistent/dismissible getting-started checklist:</p>
+<ul>
+<li><strong>Slack</strong> — only the account-creation wizard (&quot;Step 1 of 5&quot; → &quot;Step 2 of 5&quot;) and an in-product Canvas <em>template</em> called &quot;Employee Onboarding&quot; (user-authored content, not Slack&#39;s own activation checklist)</li>
+<li><strong>Linear</strong> — only a minimal &quot;You&#39;re good to go&quot; 3-card splash with no persistent checklist artifact</li>
+<li><strong>Figma</strong> — only the &quot;Welcome to Dev Mode&quot; numbered wizard (01–04, Back/Next-gated), which is a feature-specific tour, not an account-level getting-started checklist</li>
+<li><strong>Superhuman</strong> — only a conversational preference-survey flow (&quot;Let&#39;s talk about email&quot;) with no checklist UI</li>
+<li><strong>Canva</strong> — only a &quot;Let&#39;s start your team setup&quot; modal listing 3 plain bullet items (not interactive/checkable) followed by a linear step-by-step wizard, not a persistent checklist widget</li>
+</ul>
+<p>If any of these matter specifically to your research (rather than the pattern being genuinely absent from their product), it&#39;s worth double-checking directly in-product, since Mobbin&#39;s index may simply be missing that surface.</p>
+<hr>
+<h2>Design recommendations for your random-order checklist</h2>
+<ol>
+<li><p><strong>Avoid every sequence cue identified above</strong>: no numbers, no connecting/progress lines between rows, no greyed-out/locked future items. Use a flat list where every row&#39;s affordance is visually identical regardless of what else is done — model this on Linktree/Deel HR/Peloton, not Cleo AI/Remote/N26.</p>
+</li>
+<li><p><strong>Show progress as a fraction or ring, never a positional stepper.</strong> &quot;3 of 7 complete&quot; or a completion ring communicates <em>how much is left</em> without implying <em>what comes next</em>. Reserve &quot;Step X of Y&quot; language entirely for genuinely linear flows elsewhere in your product.</p>
+</li>
+<li><p><strong>Let completed items stay visible but visually demoted</strong> (checkmark + strikethrough + dimmed, as Linktree and Origin do), rather than removing them from the list or collapsing them out of view. This reinforces that any item was eligible to be done at any time, and gives users a sense of accomplishment without disrupting the list&#39;s spatial stability (items shouldn&#39;t reflow/reorder on completion, which would undercut the &quot;any order&quot; message by making the list feel sequence-driven).</p>
+</li>
+<li><p><strong>If you need grouping for a longer list (7+ items), group by theme/category (à la Vanta), not by required order</strong> — and give each group its own independent sub-progress rather than a shared checkmark chain. If you do add a chain-style connector within a group, be aware (per the Klaviyo caveat) that it will read as sequential even without a technical gate.</p>
+</li>
+<li><p><strong>Use the &quot;identical affordance&quot; test before shipping</strong>: pick any two rows at random — one done, one not — and confirm their interactive treatment (chevron behavior, button availability, tap target) is otherwise indistinguishable. If a row&#39;s interactivity depends on another row&#39;s state, that&#39;s a Remote/Cleo-style dependency and should be flagged for removal or made explicit as an actual (rare, justified) exception rather than an accident of layout.</p>
+</li>
+</ol>
+
+
+<style>
+  /* The report keeps its own document typography, retuned to the case study's
+     palette so the panel reads as part of the page rather than a pasted-in
+     window. Narrow measure, because it is embedded in a column, not a page. */
+  :root, :root[data-theme="light"] { --md-bg:#ffffff; --md-text:#1c1c1c; --md-muted:#5c5c5c; --md-fill:#f5f5f4;
+          --md-fill-strong:#ececeb; --md-rule:#e2e2e0; --md-rule-strong:#d4d4d2;
+          --md-link:#9a5600; color-scheme: light; }
+  body { max-width:none; padding:20px 22px 28px; font-size:13px;
+         font-family:Inter,system-ui,-apple-system,sans-serif; }
+  h1 { font-size:1.5em; letter-spacing:-0.02em; color:#0c0c0c; }
+  h2 { font-size:1.1em; color:#0c0c0c; letter-spacing:-0.01em; margin-top:14px; }
+  h3 { color:#4a4a4a; font-weight:500; }
+  th { color:#0c0c0c; }
+  td, th { font-size:12px; }
+  table { display:block; overflow-x:auto; }
+</style>
+</body>
+</html>

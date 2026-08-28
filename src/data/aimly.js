@@ -89,25 +89,37 @@ export const approach = {
       step: "Step 01",
       title: "Ideation with Claude Code",
       copy: "I fed Claude Code the existing design system and asked it to come up with iterations of the dashboard, describing the elements I wanted along with a low fidelity wireframe. I decided to build on one of the ideas for the final dashboard.",
-      images: [`${ASSET}/01M0R8PPJ4PY3BMGVCFYXY5CAF.png`, `${ASSET}/01M0R8PPJ4CWDJXMWMPFTMS0P7.png`],
+      images: ["/aimly-approach-ideation.webp"],
     },
     {
       step: "Step 02",
       title: "Pulling competitor patterns into Figma with Mobbin MCP",
       copy: 'I wanted a quick way of looking at the checklists that came from direct and indirect competitors. After connecting to the Mobbin MCP, I instructed Claude to gather examples of "Getting Started" patterns with a focus on random order completion from direct and indirect competitors of Aimly.',
-      images: [`${ASSET}/01M0RAJ6YVD12MSS8S7B3VQPXH.jpg`],
+      images: ["/aimly-approach-mobbin.webp"],
     },
     {
       step: "Step 03",
       title: "Turning those patterns into written guidance",
       copy: "I asked Claude to take the examples collected and write a short report on the industry wide best practices and design recommendations. I ran a similar report for the event card design for the dashboard.",
-      images: [`${ASSET}/01M0R7GGZ17G4HZVR427HQRTQK.png`, `${ASSET}/01M0R8MG847HTJTKGGMY4QMW8R.png`],
+      // The report itself, rather than a picture of it — it is a document, and
+      // a screenshot of a document is unreadable at this size.
+      doc: {
+        src: "/onboarding-checklist-analysis.html",
+        title: "Onboarding checklist competitive analysis",
+      },
     },
     {
       step: "Step 04",
       title: "Expanding the style guide to cover the new surfaces",
       copy: "Looking at the current state of the style guide, I noticed several gaps. Before I started on the ideation, I got Claude to make the foundation solid by getting it to set and expand the design system.",
-      images: [`${ASSET}/01M0RACP1EQV5Z0EMXM3WZPYVT.png`],
+      compare: {
+        before: "/aimly-style-guide-before.webp",
+        after: "/aimly-style-guide-after.webp",
+        beforeLabel: "Before",
+        afterLabel: "After",
+        beforeFill: "#808080",
+        afterFill: "#f5f7f8",
+      },
     },
   ],
 };
@@ -145,7 +157,10 @@ export const prototyping = {
     {
       label: "Version 3 — finalized",
       chosen: true,
-      image: `${ASSET}/01M0RB7BGXG7PJBMZJ7YCFZQCC.png`,
+      video: "/aimly-card-v3.mp4",
+      videoRatio: "924 / 510",
+      videoLabel:
+        "Screen recording of the finalized fundraiser card, with every action opening from the kebab menu",
       notes: [
         {
           kind: "pro",
@@ -159,7 +174,9 @@ export const prototyping = {
   shells: [
     {
       label: "Version 1",
-      image: `${ASSET}/01M0RBT3YST30WAE1ZZCY4790M.png`,
+      image: "/aimly-shell-v1.webp",
+      imageMobile: "/aimly-shell-v1-mobile.webp",
+      frame: "#C6C6C6",
       notes: [
         {
           kind: "pro",
@@ -175,7 +192,9 @@ export const prototyping = {
     {
       label: "Version 2 — finalized",
       chosen: true,
-      image: `${ASSET}/01M0RBTH4F5QMVGMBYBCBK8CGR.png`,
+      image: "/aimly-shell-v2.webp",
+      imageMobile: "/aimly-shell-v2-mobile.webp",
+      frame: "#C6C6C6",
       notes: [
         { kind: "pro", text: "'Next steps' checklist is a minimizable modal that floats on the screen." },
         {
@@ -197,22 +216,25 @@ export const prototyping = {
   finalHeading: "Final dashboard: designed and ready to deploy",
   finalShots: [
     {
-      image: `${ASSET}/01M0V7TDD0W9PP24N99CXBKDP4.png`,
+      image: "/aimly-final-dashboard.webp",
+      imageMobile: "/aimly-final-dashboard-mobile.webp",
+      frame: "#C6C6C6",
       // Where each numbered marker sits on the screenshot, as a percentage of
-      // the image. Desktop and mobile both carry the numbers they share.
+      // the image. Desktop and mobile both carry the numbers they share, and the
+      // mobile pair is the same point measured against the tighter crop.
       markers: [
-        { n: 1, left: 19.8, top: 21.5 },
-        { n: 2, left: 7.6, top: 21.5 },
-        { n: 4, left: 19.8, top: 28.2 },
-        { n: 5, left: 19.8, top: 46.6 },
-        { n: 3, left: 56.3, top: 51.3 },
-        { n: 6, left: 19.8, top: 56.1 },
-        { n: 1, left: 76.4, top: 20.8 },
-        { n: 4, left: 76.4, top: 25.3 },
-        { n: 5, left: 76.4, top: 49.6 },
-        { n: 6, left: 76.4, top: 62.4 },
-        { n: 2, left: 74.8, top: 78.5 },
-        { n: 3, left: 93.8, top: 78.5 },
+        { n: 1, left: 19.8, top: 21.5, mobileLeft: 16.3, mobileTop: 11.4 },
+        { n: 2, left: 7.6, top: 21.5, mobileLeft: 3, mobileTop: 11.4 },
+        { n: 4, left: 19.8, top: 28.2, mobileLeft: 16.3, mobileTop: 20.5 },
+        { n: 5, left: 19.8, top: 46.6, mobileLeft: 16.3, mobileTop: 45.4 },
+        { n: 3, left: 56.3, top: 51.3, mobileLeft: 56.2, mobileTop: 51.8 },
+        { n: 6, left: 19.8, top: 56.1, mobileLeft: 16.3, mobileTop: 58.3 },
+        { n: 1, left: 76.4, top: 20.8, mobileLeft: 78.1, mobileTop: 10.5 },
+        { n: 4, left: 76.4, top: 25.3, mobileLeft: 78.1, mobileTop: 16.6 },
+        { n: 5, left: 76.4, top: 49.6, mobileLeft: 78.1, mobileTop: 49.5 },
+        { n: 6, left: 76.4, top: 62.4, mobileLeft: 78.1, mobileTop: 66.8 },
+        { n: 2, left: 74.8, top: 78.5, mobileLeft: 76.4, mobileTop: 88.6 },
+        { n: 3, left: 93.8, top: 78.5, mobileLeft: 97.1, mobileTop: 88.6 },
       ],
       notes: [
         {
@@ -236,15 +258,17 @@ export const prototyping = {
       ],
     },
     {
-      image: `${ASSET}/01M0XDM60DYV2NYY97Z9MJPYGV.png`,
+      image: "/aimly-final-screens.webp",
+      imageMobile: "/aimly-final-screens-mobile.webp",
+      frame: "#C6C6C6",
       // One marker per phone, pinned to each screen's top-left corner.
       markers: [
-        { n: 7, left: 5.5, top: 16.5 },
-        { n: 8, left: 20.9, top: 16.5 },
-        { n: 9, left: 36.3, top: 16.5 },
-        { n: 10, left: 51.7, top: 16.5 },
-        { n: 11, left: 67.1, top: 16.5 },
-        { n: 12, left: 82.5, top: 16.5 },
+        { n: 7, left: 5.5, top: 16.5, mobileLeft: 2.3, mobileTop: 7.3 },
+        { n: 8, left: 20.9, top: 16.5, mobileLeft: 19.1, mobileTop: 7.3 },
+        { n: 9, left: 36.3, top: 16.5, mobileLeft: 36, mobileTop: 7.3 },
+        { n: 10, left: 51.7, top: 16.5, mobileLeft: 52.8, mobileTop: 7.3 },
+        { n: 11, left: 67.1, top: 16.5, mobileLeft: 69.7, mobileTop: 7.3 },
+        { n: 12, left: 82.5, top: 16.5, mobileLeft: 86.5, mobileTop: 7.3 },
       ],
       notes: [
         { n: 7, text: "For a first time user without a fundraiser the card becomes a call to action." },

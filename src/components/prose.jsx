@@ -101,10 +101,14 @@ export const Verdict = ({ kind, children }) => {
 };
 
 /* Numbered marker used to tie an annotation to a spot on a screenshot. */
+// Tabular figures keep 10, 11 and 12 the same width as each other, so the
+// two-digit markers read as siblings rather than three different circles. They
+// drop a point of size to keep the same breathing room a single digit gets.
 export const Marker = ({ n, className = "", style }) => (
   <span
     className={
-      "flex size-3 shrink-0 items-center justify-center rounded-full bg-note text-[8px] font-semibold leading-none text-page " +
+      "flex size-3.5 shrink-0 items-center justify-center rounded-full bg-note font-semibold leading-none tabular-nums text-page " +
+      (String(n).length > 1 ? "text-[7px] " : "text-[8px] ") +
       className
     }
     style={style}

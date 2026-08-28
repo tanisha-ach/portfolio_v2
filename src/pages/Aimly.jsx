@@ -246,19 +246,21 @@ export default function Aimly() {
           {/* Competitive analysis */}
           <div className="pt-16">
             <SectionHeader kicker={competitive.kicker} />
-            <div className="flex flex-col items-start gap-6 lg:flex-row">
-              <div className="flex flex-1 flex-col gap-4">
+            <div className="flex flex-col items-start gap-6 lg:flex-row lg:gap-16">
+              <div className="flex w-full flex-col gap-4 lg:flex-1">
                 <Heading>{competitive.heading}</Heading>
                 {competitive.paragraphs.map((paragraph, i) => (
                   <Body key={i}>{paragraph}</Body>
                 ))}
               </div>
-              <img
-                src={competitive.image}
-                alt="Feature comparison of Aimly against five competing fundraising platforms"
-                className="w-full shrink-0 border border-line lg:w-134.25"
-                loading="lazy"
-              />
+              <div className="flex w-full justify-center lg:flex-1">
+                <img
+                  src={competitive.image}
+                  alt="Feature comparison of Aimly against five competing fundraising platforms"
+                  className="w-full shrink border border-line lg:w-134.25 lg:max-w-full"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
 

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 // Fixed vectors rather than random ones, so the burst looks the same every time
 // instead of occasionally clumping. Party-confetti colours rather than a tint of
@@ -35,6 +36,61 @@ function legacyCopy(text) {
   }
 }
 
+// The cursor itself, replaced. It rides in a portal on the body so no clipped
+// or scrolling ancestor can cut it off, and sits to the lower right of the
+// pointer, clear of the arrow itself. It borrows the
+// copied confirmation's own styling, so the two read as one voice — the badge
+// names the action, the confirmation answers it.
+function CursorBadge({ x, y, copied, burst, reduced }) {
+  return createPortal(
+    <span
+      aria-hidden="true"
+      className="pointer-events-none fixed z-50 flex items-center gap-2 overflow-visible whitespace-nowrap rounded-full bg-[#F5C842] px-3.5 py-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-[#111111] shadow-lg shadow-black/40"
+      style={{ left: x, top: y, transform: "translate(14px, -8px)" }}
+    >
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        className="shrink-0"
+      >
+        <path
+          d="M4 6h16v12H4z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M4 7l8 6 8-6"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+      </svg>
+      {copied ? "Copied!" : "Copy email"}
+      {copied &&
+        !reduced &&
+        CONFETTI.map((piece, i) => (
+          <span
+            key={`${burst}-${i}`}
+            className="absolute left-1/2 top-1/2 block h-[7px] w-[3px] rounded-[1px]"
+            style={{
+              backgroundColor: piece.color,
+              "--dx": `${piece.dx}px`,
+              "--dy": `${piece.dy}px`,
+              "--rot": `${piece.rot}deg`,
+              animation: `confetti-fly 900ms cubic-bezier(0.2, 0.7, 0.3, 1) ${i * 12}ms both`,
+            }}
+          />
+        ))}
+    </span>,
+    document.body,
+  );
+}
+
 // The email address, click-to-copy. The confirmation lands under the pointer
 // rather than under the middle of the address, so it reads as a response to the
 // click itself.
@@ -43,9 +99,11 @@ function legacyCopy(text) {
 // no text of its own, so that case needs `label` to name the button.
 export default function CopyEmail({ email, children, label }) {
   const [copied, setCopied] = useState(false);
-  const [originX, setOriginX] = useState(0);
+  // Where the pointer is over the trigger, or null when it is elsewhere. The
+  // badge rides alongside the cursor rather than replacing it, and only for a
+  // pointer that has a position to ride alongside — a finger does not.
+  const [cursor, setCursor] = useState(null);
   const [burst, setBurst] = useState(0); // remounts the pill so the burst replays
-  const wrapRef = useRef(null);
   const timer = useRef(null);
 
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -54,12 +112,12 @@ export default function CopyEmail({ email, children, label }) {
     typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-  const copy = async (event) => {
-    const rect = wrapRef.current.getBoundingClientRect();
-    // A keyboard-triggered click reports clientX 0 — centre on the address then.
-    const keyboard = event.detail === 0;
-    setOriginX(keyboard ? rect.width / 2 : event.clientX - rect.left);
+  const track = (event) => {
+    if (event.pointerType === "touch") return;
+    setCursor({ x: event.clientX, y: event.clientY });
+  };
 
+  const copy = async () => {
     try {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(email);
@@ -81,13 +139,15 @@ export default function CopyEmail({ email, children, label }) {
   // inline-block so it stays on the prose baseline.
   return (
     <span
-      ref={wrapRef}
       className={`relative align-baseline ${children ? "inline-flex" : "inline-block"}`}
     >
       <button
         type="button"
         onClick={copy}
-        title="Copy email address"
+        onPointerEnter={track}
+        onPointerMove={track}
+        onPointerLeave={() => setCursor(null)}
+        onPointerCancel={() => setCursor(null)}
         aria-label={label}
         className={
           "cursor-pointer align-baseline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" +
@@ -99,34 +159,14 @@ export default function CopyEmail({ email, children, label }) {
         {children ?? email}
       </button>
 
-      {copied && (
-        <span
-          key={burst}
-          aria-hidden="true"
-          className="pointer-events-none absolute top-full z-20 mt-2 -translate-x-1/2"
-          style={{ left: originX }}
-        >
-          <span
-            className="relative block whitespace-nowrap rounded-md border border-line bg-black px-3 py-2 text-[13px] font-medium text-ink"
-            style={{ animation: "copied-pop 260ms ease-out both" }}
-          >
-            Email copied!
-            {!reduced &&
-              CONFETTI.map((p, i) => (
-                <span
-                  key={i}
-                  className="absolute left-1/2 top-1/2 block h-[7px] w-[3px] rounded-[1px]"
-                  style={{
-                    backgroundColor: p.color,
-                    "--dx": `${p.dx}px`,
-                    "--dy": `${p.dy}px`,
-                    "--rot": `${p.rot}deg`,
-                    animation: `confetti-fly 900ms cubic-bezier(0.2, 0.7, 0.3, 1) ${i * 12}ms both`,
-                  }}
-                />
-              ))}
-          </span>
-        </span>
+      {cursor && (
+        <CursorBadge
+          x={cursor.x}
+          y={cursor.y}
+          copied={copied}
+          burst={burst}
+          reduced={reduced}
+        />
       )}
 
       {/* Visibility changes alone aren't announced, so the confirmation also

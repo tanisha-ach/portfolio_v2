@@ -15,8 +15,8 @@ export const skillTags = ["Enterprise B2B", "B2C SaaS", "Fintech", "E-commerce",
 // Playground has no page yet, so it carries no href and renders as plain text.
 export const tabs = [
   { label: "Case Studies", href: "/" },
-  { label: "Playground" },
   { label: "About", href: "/about" },
+  { label: "Playground" },
 ];
 
 export const projects = [

@@ -148,7 +148,13 @@ function StatusBadge({ icon, config }) {
       {...linkProps}
       // Width is intentionally content-driven so the pill grows and shrinks with
       // the text; only `left` is animated.
-      className="absolute flex items-center gap-2.5 whitespace-nowrap rounded-3xl border border-[#333] bg-[#141414]/85 px-4 py-2.5 text-[#e4e4e4] shadow-lg shadow-black/40 backdrop-blur-md transition-[left] duration-500 ease-out"
+      // While it types, the pill runs its longest phrase and reaches furthest
+      // over the content column, so it goes fully opaque until the text settles
+      // back to the short one.
+      className={
+        "absolute flex items-center gap-2.5 whitespace-nowrap rounded-3xl border border-[#333] px-4 py-2.5 text-[#e4e4e4] shadow-lg shadow-black/40 backdrop-blur-md transition-[left] duration-500 ease-out " +
+        (done ? "bg-[#141414]/85" : "bg-[#141414]")
+      }
       style={{ top: config.top, left: config.left[Math.min(index, config.left.length - 1)] }}
       // The text mutates every few ms, so expose the settled phrase instead of
       // letting assistive tech announce each keystroke.

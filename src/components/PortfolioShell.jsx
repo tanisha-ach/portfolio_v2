@@ -180,7 +180,10 @@ export default function PortfolioShell({ activeTab, badges = null, accent = ACCE
     >
       {menuOpen && <MobileMenu activeTab={activeTab} onClose={() => setMenuOpen(false)} />}
 
-      <aside className="relative flex shrink-0 flex-col gap-1 border-b border-[#2a2a2a] bg-[#111111] p-6 sm:px-9 sm:py-8 lg:w-95 lg:border-b-0 lg:border-r lg:py-10">
+      {/* The status pills overhang the rail into the content column, so the rail
+          has to paint above it — otherwise the tab row, which is positioned for
+          its own marker, draws over them. */}
+      <aside className="relative z-20 flex shrink-0 flex-col gap-1 border-b border-[#2a2a2a] bg-[#111111] p-6 sm:px-9 sm:py-8 lg:w-95 lg:border-b-0 lg:border-r lg:py-10">
         <div className="hidden lg:mb-7 lg:flex lg:w-fit lg:items-center lg:gap-5">
           <div className="relative aspect-square w-40 shrink-0 overflow-hidden rounded-[20px] bg-[#ddd] sm:w-56 lg:h-70 lg:w-70">
             <div

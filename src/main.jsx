@@ -4,12 +4,14 @@ import App from "./App.jsx";
 import Aimly from "./pages/Aimly.jsx";
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
+import Playground from "./pages/Playground.jsx";
 import "./index.css";
 
 const routes = [
   ["/aimly", Aimly],
   ["/upgrade-hmc", App],
   ["/about", About],
+  ["/playground", Playground],
 ];
 
 const path = window.location.pathname;

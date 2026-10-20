@@ -12,18 +12,21 @@ export const profile = {
 
 export const skillTags = ["Enterprise B2B", "B2C SaaS", "Fintech", "E-commerce", "Healthcare"];
 
-// Playground has no page yet, so it carries no href and renders as plain text.
+// A tab without an href renders as plain text with a coming-soon label.
 export const tabs = [
   { label: "Case Studies", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Playground" },
+  { label: "Playground", href: "/playground" },
 ];
 
 export const projects = [
   {
     number: "01",
     eyebrow: "01 · B2C · E-Commerce",
-    title: "Aimly LLC",
+    title: "From blank canvas to a fully functional dashboard for Aimly",
+    // The wide card sets the headline in a fixed measure so it breaks where the
+    // design breaks it rather than wherever the column happens to end.
+    titleWidth: 469,
     description:
       "Led 0-to-1 design of the account creation and dashboard, driving 28.8% increase in new users and a 34.3% lift in events.",
     tags: ["0 → 1", "AI Assisted UX", "Mobile First"],
@@ -33,7 +36,8 @@ export const projects = [
     // Room the narrow card holds open above its copy. Short enough here that
     // the title tucks in beside the phone, as the design has it.
     reserve: "15rem",
-    gradient: "linear-gradient(108.84deg in oklab, #098511 54%, #38B440 54%)",
+    gradient:
+      "linear-gradient(108.84deg in oklab, oklab(53.6% -0.14 0.106) 54.34%, oklab(53.6% -0.14 0.106) 54.34%, oklab(67.8% -0.154 0.112) 107.14%)",
     // `shift` is how far the mockup slides on card hover, in px — negative is
     // up. The two phones move in opposite directions so the pair opens out
     // rather than sliding as one block.
@@ -49,17 +53,17 @@ export const projects = [
       // offset would drift as the viewport narrows.
       {
         src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01M0ZT48RDS7DDD2JZ0VJJNBQ2.png",
-        width: 199,
-        height: 409,
-        right: 60,
+        width: 202,
+        height: 411,
+        right: 0,
         top: -239,
         shift: 12,
       },
       {
         src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01M0ZT48RDS7DDD2JZ0VJJNBQ2.png",
-        width: 199,
-        height: 409,
-        right: 275,
+        width: 205,
+        height: 418,
+        right: 209,
         top: -16,
         shift: -12,
         mobile: { width: "34%", right: "7.2%", top: "4.6%" },
@@ -69,9 +73,10 @@ export const projects = [
   {
     number: "02",
     eyebrow: "02 · Enterprise B2B",
-    title: "Upgrade HMC",
+    title: "Helping 120k companies around the world avoid a loss of $1M+",
+    titleWidth: 495,
     description:
-      "Bringing a code-only upgrade task to the GUI, helping enterprises avoid losses of up to a million dollars.",
+      "Bringing a code-only upgrade task to the GUI, NPS score of the product went up by 30%.",
     tags: ["0 → 1", "UX Research", "UX Design"],
     href: "/upgrade-hmc",
     accent: "#06B6D4",
@@ -87,7 +92,7 @@ export const projects = [
         src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01KYDX51X81F7ZPW7Q4HD6MEG5.png",
         width: 403,
         height: 403,
-        right: 60,
+        right: 0,
         top: -94,
         mobile: { width: "119.5%", right: "-55%", top: "-27%" },
       },
@@ -95,10 +100,52 @@ export const projects = [
         src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01KYDWSSYWKDHRGZ85XWXZ704C.png",
         width: 310,
         height: 189,
-        right: 197,
+        right: 137,
         top: -1,
         zoom: 1.5,
         mobile: { width: "113%", right: "-49%", top: "4.8%" },
+      },
+    ],
+  },
+  {
+    number: "03",
+    eyebrow: "03 · B2C · Fintech",
+    title: "Redesigning the investment experience for first-time digital investors",
+    titleWidth: 510,
+    description:
+      "Product rating went up from 3.8 to 4.5 on the Play Store.",
+    tags: ["UX Design", "Fintech UX", "Mobile UX"],
+    // No case study page yet: the card answers a click with a coming-soon
+    // note instead of navigating.
+    comingSoon: true,
+    accent: "#E5484D",
+    // A touch taller than Aimly's: this headline's first line runs wider and
+    // would otherwise clip the foot of the phone.
+    reserve: "16rem",
+    gradient:
+      "linear-gradient(135deg in oklab, oklab(25.9% 0.099 0.031) 0%, oklab(39.6% 0.12 0.058) 50%, oklab(44.4% 0.144 0.073) 100%)",
+    images: [
+      {
+        src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01KYDWVN5F3AFAY88VH1HMPK7Q.png",
+        width: 207,
+        height: 416,
+        right: -17,
+        top: -201,
+        shift: 12,
+      },
+      {
+        // This screenshot carries its own bezel margin, so it is cropped in
+        // slightly and given the phone's corner radius.
+        src: "https://app.paper.design/file-assets/01KY86RD325CPNB088ESCM9HH1/01M5BWJ2YWK4GQW1BGBH2S68NY.png",
+        width: 210,
+        height: 437,
+        right: 190,
+        top: 14,
+        shift: -12,
+        size: "105%",
+        position: "47.619% 77.778%",
+        radius: 28,
+        mobile: { width: "34%", right: "7.2%", top: "4.6%" },
       },
     ],
   },
@@ -125,5 +172,23 @@ export const hireBadge = {
   phrases: ["Available for hire", "Hire Me!"],
   startDelay: 550,
   href: "https://calendly.com/tanisha-acharya-utexas/30min",
+  hover: "Book time with me on Calendly!",
   trace: "#F5C842",
 };
+
+// Things worth a look that are not case studies. Each is a tile on the
+// Playground canvas and links out in a new tab.
+export const playground = [
+  {
+    title: "Bevoadvisor",
+    note: "building an AI chatbot to help 10,000+ Graduate students make better course choices",
+    href: "https://tanishadesigns.framer.website/bevoadvisor",
+    image: "/playground-bevoadvisor.webp",
+  },
+  {
+    title: "Beanie Designer",
+    note: "Add your own motif to your beanie knitting chart",
+    href: "https://t.co/WkxcoFPPG7",
+    image: "/playground-beanie.webp",
+  },
+];

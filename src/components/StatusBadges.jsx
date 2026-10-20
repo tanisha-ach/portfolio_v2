@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import useTypewriter from "../hooks/useTypewriter";
+import { CursorBadge, useCursor } from "./CursorBadge";
 import { locationBadge, hireBadge } from "../data/home";
 
 // The intro types itself out once per visit. Every page in the shell renders the
@@ -110,6 +111,9 @@ function StatusBadge({ icon, config }) {
   });
   const pillRef = useRef(null);
   const [box, setBox] = useState(null);
+  // A pill that links somewhere names where it goes beside the cursor, in the
+  // same voice as the email and LinkedIn icons.
+  const { cursor, handlers } = useCursor();
 
   // Remember the run the moment it finishes, so the next page in this session
   // opens on the settled pills rather than typing them again.
@@ -139,7 +143,7 @@ function StatusBadge({ icon, config }) {
   // styled div — keyboard focus and middle-click come with the element.
   const Tag = config.href ? "a" : "div";
   const linkProps = config.href
-    ? { href: config.href, target: "_blank", rel: "noreferrer" }
+    ? { href: config.href, target: "_blank", rel: "noreferrer", ...handlers }
     : {};
 
   return (
@@ -170,6 +174,9 @@ function StatusBadge({ icon, config }) {
           className="-ml-1 inline-block h-4.5 w-px shrink-0 bg-current"
           style={{ animation: "caret-blink 1s step-end infinite" }}
         />
+      )}
+      {config.hover && cursor && (
+        <CursorBadge x={cursor.x} y={cursor.y} label={config.hover} />
       )}
       {box && <TraceOutline width={box.width} height={box.height} color={`var(--accent, ${config.trace})`} />}
     </Tag>

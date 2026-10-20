@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import CopyEmail from "./CopyEmail";
+import { CursorBadge, useCursor } from "./CursorBadge";
 import { skillTags, tabs, profile } from "../data/home";
 
 function EmailIcon() {
@@ -63,6 +64,20 @@ function CloseIcon() {
 export const ACCENT = "#F5C842";
 
 const SOCIAL = "block text-white transition-colors hover:text-[#F5C842]";
+
+// The LinkedIn icon carries the same cursor badge as the email icon beside it,
+// so the pair reads as one set of contact actions.
+function LinkedInLink({ href }) {
+  const { cursor, handlers } = useCursor();
+  return (
+    <a href={href} target="_blank" rel="noreferrer" aria-label="LinkedIn" className={SOCIAL} {...handlers}>
+      <LinkedInIcon />
+      {cursor && (
+        <CursorBadge x={cursor.x} y={cursor.y} label="Stalk me on LinkedIn" />
+      )}
+    </a>
+  );
+}
 
 // A tab with no destination says so rather than looking broken. The label rides
 // the pointer because the tab is inert — there is no control to anchor to, and a
@@ -183,7 +198,8 @@ export default function PortfolioShell({ activeTab, badges = null, accent = ACCE
       {/* The status pills overhang the rail into the content column, so the rail
           has to paint above it — otherwise the tab row, which is positioned for
           its own marker, draws over them. */}
-      <aside className="relative z-20 flex shrink-0 flex-col gap-1 border-b border-[#2a2a2a] bg-[#111111] p-6 sm:px-9 sm:py-8 lg:w-95 lg:border-b-0 lg:border-r lg:py-10">
+      {/* On lg the rail stays put while the page scrolls past it. */}
+      <aside className="relative z-20 flex shrink-0 flex-col gap-1 border-b border-[#2a2a2a] bg-[#111111] p-6 sm:px-9 sm:py-8 lg:sticky lg:top-0 lg:h-screen lg:w-95 lg:self-start lg:border-b-0 lg:border-r lg:py-10">
         <div className="hidden lg:mb-7 lg:flex lg:w-fit lg:items-center lg:gap-5">
           <div className="relative aspect-square w-40 shrink-0 overflow-hidden rounded-[20px] bg-[#ddd] sm:w-56 lg:h-70 lg:w-70">
             <div
@@ -206,9 +222,7 @@ export default function PortfolioShell({ activeTab, badges = null, accent = ACCE
               <EmailIcon />
             </span>
           </CopyEmail>
-          <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className={SOCIAL}>
-            <LinkedInIcon />
-          </a>
+          <LinkedInLink href={profile.linkedin} />
           <button
             type="button"
             onClick={() => setMenuOpen(true)}
@@ -246,28 +260,33 @@ export default function PortfolioShell({ activeTab, badges = null, accent = ACCE
       {/* Cards and the tab rule both take their width from this column, running
           the full remaining width inside a matching gutter on either side. */}
       <main className="flex min-w-0 flex-1 flex-col px-4 pb-12 pt-4 sm:px-10 sm:py-8 lg:py-9">
-        <nav className="mb-8 hidden gap-4 overflow-x-auto border-b border-[#2a2a2a] sm:gap-8 lg:flex">
-          {tabs.map((tab) => {
-            const active = tab.label === activeTab;
-            const className =
-              "block w-fit shrink-0 whitespace-nowrap px-4 pb-3 text-[15px] leading-4.5 " +
-              // The marker is a bar rather than a border, because a border
-              // cannot carry a radius on only its top two corners.
-              (active
-                ? "relative font-semibold text-white after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:rounded-t-2xl after:bg-[var(--accent)] after:transition-colors after:content-['']"
-                : "text-[#666] transition-colors hover:text-[#aaa]");
+        {/* The tab bar pins to the top as the cards scroll under it. The
+            wrapper takes over the column's top padding so the bar doesn't jump
+            when it sticks, and its opaque ground hides what passes beneath. */}
+        <div className="mb-8 hidden bg-[#151515] lg:sticky lg:top-0 lg:z-10 lg:-mt-9 lg:block lg:pt-9">
+          <nav className="flex gap-4 overflow-x-auto border-b border-[#2a2a2a] sm:gap-8">
+            {tabs.map((tab) => {
+              const active = tab.label === activeTab;
+              const className =
+                "block w-fit shrink-0 whitespace-nowrap px-4 pb-3 text-[15px] leading-4.5 " +
+                // The marker is a bar rather than a border, because a border
+                // cannot carry a radius on only its top two corners.
+                (active
+                  ? "relative font-semibold text-white after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:rounded-t-2xl after:bg-[var(--accent)] after:transition-colors after:content-['']"
+                  : "text-[#666] transition-colors hover:text-[#aaa]");
 
-            // Tabs without a destination yet render as plain text rather than
-            // links that go nowhere.
-            return tab.href ? (
-              <a key={tab.label} href={tab.href} className={className}>
-                {tab.label}
-              </a>
-            ) : (
-              <ComingSoon key={tab.label} label={tab.label} className={className} />
-            );
-          })}
-        </nav>
+              // Tabs without a destination yet render as plain text rather than
+              // links that go nowhere.
+              return tab.href ? (
+                <a key={tab.label} href={tab.href} className={className}>
+                  {tab.label}
+                </a>
+              ) : (
+                <ComingSoon key={tab.label} label={tab.label} className={className} />
+              );
+            })}
+          </nav>
+        </div>
 
         {children}
       </main>

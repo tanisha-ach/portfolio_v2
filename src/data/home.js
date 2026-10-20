@@ -36,8 +36,18 @@ export const projects = [
     // Room the narrow card holds open above its copy. Short enough here that
     // the title tucks in beside the phone, as the design has it.
     reserve: "15rem",
-    gradient:
-      "linear-gradient(108.84deg in oklab, oklab(53.6% -0.14 0.106) 54.34%, oklab(53.6% -0.14 0.106) 54.34%, oklab(67.8% -0.154 0.112) 107.14%)",
+    // The bare 54.34% is a colour hint, not a stop: the blend's midpoint lands
+    // right on the first stop, so the green steps up along a crisp diagonal and
+    // then eases toward the lighter shade.
+    gradient: "linear-gradient(108.84deg in oklab, #098511 54.34%, 54.34%, #38B440 107.14%)",
+    // On desktop the step is pinned behind the left phone instead. The phones
+    // are placed from the card's right edge, so the step is measured from the
+    // gradient's far end too: ~325px back along the 108.84deg line lands it in
+    // the middle of that phone, which covers the card's full height, so the
+    // diagonal never shows beside it at any card width. The light end keeps
+    // the design's 52.8% (about 530px) of run beyond the step.
+    gradientWide:
+      "linear-gradient(108.84deg in oklab, #098511 calc(100% - 325px), calc(100% - 325px), #38B440 calc(100% + 205px))",
     // `shift` is how far the mockup slides on card hover, in px — negative is
     // up. The two phones move in opposite directions so the pair opens out
     // rather than sliding as one block.

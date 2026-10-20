@@ -73,8 +73,12 @@ export default function Home() {
                   setAccent(null);
                   soon.hide();
                 }}
-                className="group relative flex w-full shrink-0 cursor-pointer items-end overflow-hidden rounded-2xl px-5.5 pb-6 pt-[var(--reserve)] text-left transition-transform duration-300 ease-out hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100 lg:min-h-45 lg:items-center lg:p-8"
-                style={{ backgroundImage: project.gradient, "--reserve": project.reserve }}
+                className="group relative flex [background-image:var(--gradient)] lg:[background-image:var(--gradient-wide)] w-full shrink-0 cursor-pointer items-end overflow-hidden rounded-2xl px-5.5 pb-6 pt-[var(--reserve)] text-left transition-transform duration-300 ease-out hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100 lg:min-h-45 lg:items-center lg:p-8"
+                style={{
+                  "--gradient": project.gradient,
+                  "--gradient-wide": project.gradientWide ?? project.gradient,
+                  "--reserve": project.reserve,
+                }}
               >
                 {/* The wide layout positions its art inside the text column — the
                     frame those offsets were authored in. The mobile design places

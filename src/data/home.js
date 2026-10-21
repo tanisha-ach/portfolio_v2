@@ -171,7 +171,7 @@ export const projects = [
 export const locationBadge = {
   top: 24,
   left: [198, 206],
-  phrases: ["Moving between Austin and New York", "AUS ↔ NYC"],
+  phrases: ["Moving between Austin and New York", "ATX ↔ NYC"],
   startDelay: 350,
   trace: "#F5C842",
 };

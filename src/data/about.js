@@ -9,7 +9,7 @@ export const body =
 // The two pills that sit over the portrait on narrow screens. On lg the rail
 // carries the photo instead, and these have nowhere to hang.
 export const pills = [
-  { icon: "pin", label: "AUS \u2194 NYC" },
+  { icon: "pin", label: "ATX \u2194 NYC" },
   { icon: "briefcase", label: "Hire Me!" },
 ];
 

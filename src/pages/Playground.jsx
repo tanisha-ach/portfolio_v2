@@ -343,29 +343,40 @@ export default function Playground() {
           the lens bends against the real border, not an inset box. */}
       <div
         ref={frame}
-        className="relative -mx-4 -mb-12 -mt-4 h-[80svh] cursor-grab touch-none select-none overflow-hidden sm:-mx-10 sm:-my-8 lg:-mb-9 lg:-mt-8 lg:h-auto lg:flex-1"
+        className="relative -mx-4 -mb-12 -mt-4 h-[80svh] cursor-grab touch-none select-none overflow-hidden bg-black sm:-mx-10 sm:-my-8 lg:-mb-9 lg:-mt-8 lg:h-auto lg:flex-1"
       >
-        <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 size-full" />
+        {/* The canvas switches on like an old CRT (the timing lives with the
+            keyframes in index.css). The transform lives on this inner layer,
+            never on the frame, because the frame is what the canvas is
+            measured and hit-tested against. */}
+        <div className="crt-screen absolute inset-0">
+          <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 size-full" />
 
-        {/* The tiles are pixels, so the links live here too for keyboard and
-            screen-reader users. They stay out of sight until focused. */}
-        <nav aria-label="Playground projects" className="absolute left-4 top-4 flex flex-col gap-2">
-          {playground.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              target="_blank"
-              rel="noreferrer"
-              className="sr-only rounded-full bg-[#141414] px-4 py-2 text-[13px] text-white focus:not-sr-only focus:outline-2 focus:outline-[var(--accent)]"
-            >
-              {item.title} — {item.note}
-            </a>
-          ))}
-        </nav>
+          {/* The tiles are pixels, so the links live here too for keyboard and
+              screen-reader users. They stay out of sight until focused. */}
+          <nav aria-label="Playground projects" className="absolute left-4 top-4 flex flex-col gap-2">
+            {playground.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                className="sr-only rounded-full bg-[#141414] px-4 py-2 text-[13px] text-white focus:not-sr-only focus:outline-2 focus:outline-[var(--accent)]"
+              >
+                {item.title} — {item.note}
+              </a>
+            ))}
+          </nav>
 
-        <div className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#141414]/85 px-4 py-2 text-[13px] text-[#aaa] backdrop-blur-md">
-          Drag, scroll or use the arrow keys
+          <div className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#141414]/85 px-4 py-2 text-[13px] text-[#aaa] backdrop-blur-md">
+            Drag, scroll or use the arrow keys
+          </div>
         </div>
+
+        <div aria-hidden="true" className="crt-scanlines pointer-events-none absolute inset-0" />
+        <div aria-hidden="true" className="crt-streaks pointer-events-none absolute inset-0 opacity-0" />
+        <div aria-hidden="true" className="crt-flash pointer-events-none absolute inset-0 opacity-0" />
+        <div aria-hidden="true" className="crt-beam pointer-events-none absolute inset-x-0 opacity-0" />
       </div>
     </PortfolioShell>
   );
